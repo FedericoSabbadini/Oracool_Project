@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+    <head>
+        <title>
+            @yield('head')
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- Caricamento CSS per Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <!-- CSS personalizzato -->
+        <link href="{{ url('/') }}/css/style.css" rel="stylesheet">
+        <link href="{{ url('/') }}/css/dataTables.css" rel="stylesheet">
+
+        <!-- Font Awesome per le icone -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+        <!-- Caricamento jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Uso della versione senza "slim" -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <!-- Caricamento Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+        <!-- Caricamento myScript -->
+        <script src="{{ url('/') }}/js/timezone.js"></script> <!-- Uso della versione senza "slim" -->
+        
+
+        <!-- Caricamento DataTables CSS e JS -->
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        
+        <!-- Toastr CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.options = {
+                "closeButton": true, // Aggiunge un pulsante per chiudere la notifica
+                "progressBar": true, // Mostra una barra di progresso
+                "positionClass": "toast-bottom-right", // Posizione delle notifiche (in alto a destra)
+                "timeOut": "5000", // Durata della notifica in millisecondi (5 secondi)
+                "extendedTimeOut": "1000", // Tempo extra dopo che l'utente passa sopra la notifica
+                "showEasing": "swing", // Tipo di transizione quando appare
+                "hideEasing": "linear", // Tipo di transizione quando scompare
+                "showMethod": "fadeIn", // Come appare la notifica
+                "hideMethod": "fadeOut", // Come scompare la notifica
+                "newestOnTop": false, 
+            };
+        </script>
+
+    </head>
+
+    <body>
+
+            <script>
+                $(document).ready(function () {
+                    let clickedOnce = false;
+
+                    $('#logout-action').on('click', function (e) {
+                        e.preventDefault();
+                        
+                        if (!clickedOnce) {
+                            clickedOnce = true;
+
+                            // Change the text of the logout button to indicate confirmation is needed
+                            $(this).text("{{ __('master.confirm_log_out') }}");
+                            // Add a brighter red color for the confirmation state
+                            $(this).css({'color': '#ff0000', 'font-weight': '600'}); // Make text bright red and semi-bold
+                            // Reset after 5 seconds if user doesn't click again
+                            setTimeout(function() {
+                                clickedOnce = false;
+                                $('#logout-action').css({'color': '', 'font-weight': ''}); // Reset CSS styling
+                                $('#logout-action').text("{{ __('master.log_out') }}");
+
+                            }, 5000);
+                            
+                        } else {
+                            $('#logout-form').submit();
+                        }
+                    });
+                });
+            </script>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container px-4">
+                
+                <div class="navbar-brand">
+                    <strong>Oracool</strong>
+                    @yield('back')
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        
+                        @php
+                            $lang = session('language');
+                            $langUpdate = $lang == 'it' ? 'en' : 'it';
+                        @endphp 
+
+                        @if(Auth::check())
+                            @if(Auth::user()->admin)
+                            <li class="nav-item"><a class="nav-link @yield('controlPanel-active')" href="{{ route('controlPanel.index') }}">{{ __('master.home') }}</a></li>
+                            <li class="nav-item"><a class="nav-link disabled @yield('predictionAdd-active')">{{ __('master.add') }}</a></li>
+                            <li class="nav-item"><a class="nav-link disabled @yield('predictionEdit-active')" >{{ __('master.edit') }}</a></li>
+                            <li class="nav-item"><a class="nav-link disabled @yield('predictionClose-active')" >{{ __('master.close') }}</a></li>
+
+                            <li class="nav-item"><a id="logout-action" class="nav-link text-danger" href="#" onclick="handleLogoutClick(event)">{{ __('master.log_out') }}</a>
+                                <form id="logout-form" action="{{ route('logout.destroy') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate)  }}</a></li>
+
+                            @else
+                            <li class="nav-item"><a class="nav-link @yield('home-active')" href="{{ route('home.index') }}">{{ __('master.home') }}</a></li>
+                            <li class="nav-item"><a class="nav-link @yield('prediction-active')" href="{{ route('prediction.create') }}">{{ __('master.predictions') }}</a></li>
+                            <li class="nav-item"><a class="nav-link @yield('ranking-active')" href="{{ route('ranking.index') }}">{{ __('master.ranking') }}</a></li>
+                            <li class="nav-item"><a class="nav-link @yield('userProfile-active')" href="{{ route('userProfile.index') }}">{{ __('master.profile') }}</a></li>
+                            <li class="nav-item"><a id="logout-action" class="nav-link text-danger" href="#" onclick="handleLogoutClick(event)">{{ __('master.log_out') }}</a>
+                                <form id="logout-form" action="{{ route('logout.destroy') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                            
+                            <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate)  }}</a></li>
+
+                            @endif
+                        @else
+                            <li class="nav-item"><a class="nav-link @yield('home-active')" href="{{ route('home.index') }}">{{ __('master.home') }}</a></li>
+                            <li class="nav-item"><a class="nav-link @yield('prediction-active')" href="{{ route('prediction.create') }}">{{ __('master.predictions') }}</a></li>
+                            <li class="nav-item"><a class="nav-link @yield('ranking-active')" href="{{ route('ranking.index') }}">{{ __('master.ranking') }}</a></li>
+                            <li class="nav-item pr-2" ><a class="nav-link text-primary @yield('login-active')" href="{{ route('login.create') }}">{{ __('master.log_in') }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate) }}</a></li>
+
+                        @endif
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+
+        
+        <div class="separator"></div>
+        <div class="container-fluid px-0">
+            @yield('body')
+        </div>
+
+
+        <footer class=" text-white">
+            <div class="container px-4 text-center">
+                <small class="footer">© 2025 
+                    <strong>Oracool</strong> - {{ __('master.all_rights_reserved') }}
+                </small>
+            </div>
+        </footer>
+
+    </body>
+
+    @yield('scripts')
+
+</html>
