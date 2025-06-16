@@ -12,7 +12,15 @@ class PredictionAddController extends Controller
 
     public function create()
     {
-        return view('predictionAdd');
+        $clubData = include resource_path('data/clubData.php');
+
+        return view('predictionAdd', [
+        'teams' => $clubData['teams'],
+        'countries' => $clubData['countries'],
+        'cities' => $clubData['cities'],
+        'stadiums' => $clubData['stadiums'],
+        'competitions' => $clubData['competitions'],
+    ]);;
     }
 
     public function store(Request $request)

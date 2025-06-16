@@ -27,6 +27,8 @@ class OddsController extends Controller
         'soccer_germany_bundesliga',           // Germania: Bundesliga - Germany
         'soccer_italy_serie_a',                // Italia: Serie A
         'soccer_spain_la_liga',                // Spagna: La Liga
+        'soccer_fifa_club_world_cup',          // FIFA Club World Cup
+
 
         'soccer_argentina_primera_division',   // Argentina: Primera División
         'soccer_australia_aleague',            // Australia: A-League
@@ -75,7 +77,7 @@ class OddsController extends Controller
         $errors = [];
 
         // Solo le leghe che erano utilizzate nel codice originale
-        $activeLeagues = array_slice($leagues, 0, 5);
+        $activeLeagues = array_slice($leagues, 0, 6);
         
         foreach ($activeLeagues as $league) {
             $result = $this->oddsService->updateEventsOdds($league);
