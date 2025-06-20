@@ -26,6 +26,6 @@ class Event extends Model
         }
         public function eventFootball()
         {
-            return $this->hasOne(EventFootball::class);
+            return $this->hasOne(EventFootball::class, 'id', 'id');
         }
 }

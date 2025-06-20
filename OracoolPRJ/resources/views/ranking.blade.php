@@ -134,7 +134,7 @@
                                 <td class="d-none d-md-table-cell">{{ number_format($user->points, 2, '.', '') }}</td>
                                 <td class="d-none d-md-table-cell">{{$totPredictions}}</td>
                                 <td >{{$accuracy . '%'}}</td>
-                                <td class="text-secondary small">{{ \Carbon\Carbon::parse($lastPrediction)->translatedFormat('d-M-y') }}</td>
+                                <td class="d-none  d-lg-table-cell text-secondary small">{{ \Carbon\Carbon::parse($lastPrediction)->translatedFormat('d-M-y') }}</td>
 
                             </tr>
                         @endforeach

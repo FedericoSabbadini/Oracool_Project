@@ -53,6 +53,10 @@ class OddsApiService
         $updatedCount = 0;
         $matchedByTeams = 0;
         $foundApiEvents = count($apiData);
+            foreach ($apiData as $match) {
+        // Stampa solo home e away team
+        Log::info("Partita: {$match['home_team']} vs {$match['away_team']}");
+    }
 
         Log::info('Eventi trovati dall\'API: ' . $foundApiEvents);
 

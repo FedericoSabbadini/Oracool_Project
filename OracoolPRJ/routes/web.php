@@ -19,12 +19,21 @@ use App\Http\Controllers\OddsController;
 
 
 Route::get('/', [FrontController::class, 'index'])->name('home.index');
+Route::post('/set-isAdmin', [FrontController::class, 'setIsAdmin'])->name('set.isAdmin');
+
 
 Route::post('/set-timezone', [LangController::class, 'setTimezone'])->name('set.timezone');
+Route::resource('/lang', LangController::class)
+->only(['edit']);    
+    // EDIT   /lang/{lang}/edit       -> edit    (lang.edit)   // Edit language
 
 
+Route::middleware('auth')->group(function () {
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 require __DIR__.'/auth.php';
-
 
 
 Route::middleware(['PredictionStatus'])->group(function () {
@@ -73,10 +82,5 @@ Route::middleware(['PredictionStatus'])->group(function () {
 Route::resource('/ranking', RankingController::class)
 ->only(['index']);
     // GET    /ranking                -> index   (ranking.index)  // Show all user profiles
-
-Route::resource('/lang', LangController::class)
-->only(['edit']);    
-    // GET   /lang/{lang}/edit       -> edit    (lang.edit)   // Edit language
-
 
 

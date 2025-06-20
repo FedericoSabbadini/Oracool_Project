@@ -10,6 +10,7 @@ class LangController extends Controller
     public function edit(Request $request, $lang)
     {
         session()->put('language', $lang);
+        
         return redirect()->back();
     }
 

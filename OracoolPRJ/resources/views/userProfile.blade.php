@@ -57,6 +57,8 @@
                 }
             ],
 
+             order: [[0, 'desc']],
+
             // Impostazioni per la ricerca
             language: {
                 paginate: {
@@ -172,11 +174,3 @@
         </div>
         
     @endsection
-
-@section('scripts')
-  <script>
-    $(document).ready(function() {
-      setTimezone();
-    });
-  </script>
-@endsection

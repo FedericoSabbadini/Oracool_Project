@@ -20,11 +20,6 @@
         </script>
     @endif
     
-  <script>
-    $(document).ready(function() {
-      setTimezone();
-    });
-  </script>
   
   <h1 class="display-4 fw-bold">{{ __('prediction.heading') }}</h1>
   <p class="lead mt-3 mx-3">{{ __('prediction.subheading') }}</p>
@@ -47,7 +42,9 @@
         <div class="card bg-light-secondary border-0 shadow-sm">
           <div class="card-body text-center px-4">
             <h5 class="card-title fs-4 fw-semibold">{{$eventFootball->home_team}} - {{$eventFootball->away_team}}</h5>
-            <p class="text-muted mb-3">{{$eventFootball->competition}} {{ __('prediction.match_time_separator') }} <span class="small text-secondary">{{ \Carbon\Carbon::parse($eventFootball->start_time)->translatedFormat('H:i') }}</span> {{ __('prediction.match_location_separator') }} {{$eventFootball->stadium}}</p>
+            <p class="text-muted mb-3">{{$eventFootball->competition}} {{ __('prediction.match_time_separator') }} 
+              <span class="small text-secondary">{{ \Carbon\Carbon::parse($eventFootball->start_time)->translatedFormat('H:i') }}</span> 
+            {{ __('prediction.match_location_separator') }} {{$eventFootball->stadium}}</p>
 
             @php
               

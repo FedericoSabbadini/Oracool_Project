@@ -30,6 +30,6 @@ class Prediction extends Model
 
     public function predictionFootball()
     {
-        return $this->hasOne(PredictionFootball::class);
+        return $this->hasOne(PredictionFootball::class, 'id', 'id');
     }
 }

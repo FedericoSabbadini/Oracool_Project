@@ -16,13 +16,6 @@
       </script>
   @endif
 
-  <script>
-    $(document).ready(function() {
-      setTimezone();
-    });
-  </script>
-
-
   <h1 class="display-4 fw-bold">{{ __('controlPanel.header') }}</h1>
   <p class="lead mt-3 px-4">{{ __('controlPanel.subheader') }}</p>
   <div class="date-display align-items-center justify-content-center mt-2">

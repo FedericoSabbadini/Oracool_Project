@@ -8,6 +8,7 @@
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Caricamento CSS per Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -33,7 +34,7 @@
         <!-- Caricamento myScript -->
         <script src="{{ url('/') }}/js/timezone.js"></script> <!-- Uso della versione senza "slim" -->
         
-
+        
         <!-- Caricamento DataTables CSS e JS -->
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -61,31 +62,57 @@
 
     <body>
 
-            <script>
-                $(document).ready(function () {
-                    let clickedOnce = false;
+        <script>
+            $(document).ready(function () {
 
-                    $('#logout-action').on('click', function (e) {
-                        e.preventDefault();
-                        
-                        if (!clickedOnce) {
-                            clickedOnce = true;
+                setTimezone();
 
-                            // Change the text of the logout button to indicate confirmation is needed
-                            $(this).text("{{ __('master.confirm_log_out') }}");
-                            // Add a brighter red color for the confirmation state
-                            $(this).css({'color': '#ff0000', 'font-weight': '600'}); // Make text bright red and semi-bold
-                            // Reset after 5 seconds if user doesn't click again
-                            setTimeout(function() {
-                                clickedOnce = false;
-                                $('#logout-action').css({'color': '', 'font-weight': ''}); // Reset CSS styling
-                                $('#logout-action').text("{{ __('master.log_out') }}");
+                $('#isAdmin-action').on('click', function(e) {
+                    e.preventDefault();
 
-                            }, 5000);
-                            
-                        } else {
-                            $('#logout-form').submit();
+                    let adminValue = $('#isAdmin-form input[name="isAdmin"]').val();
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
+                    });
+                    $.ajax({
+                        url: '{{ route("set.isAdmin") }}',
+                        type: 'POST',
+                        data: {
+                            admin: adminValue
+                        },
+                        success: function() {
+                            $('#isAdmin-form').submit();
+                        },
+
+                    });
+                });
+
+                let clickedOnce = false;
+                $('#logout-action').on('click', function (e) {
+                    e.preventDefault();
+                    
+                    if (!clickedOnce) {
+                        clickedOnce = true;
+
+                        // Change the text of the logout button to indicate confirmation is needed
+                        $(this).text("{{ __('master.confirm_log_out') }}");
+                        // Add a brighter red color for the confirmation state
+                        $(this).css({'color': '#ff0000', 'font-weight': '600'}); // Make text bright red and semi-bold
+                        // Reset after 5 seconds if user doesn't click again
+                        setTimeout(function() {
+                            clickedOnce = false;
+                            $('#logout-action').css({'color': '', 'font-weight': ''}); // Reset CSS styling
+                            $('#logout-action').text("{{ __('master.log_out') }}");
+
+                        }, 5000);
+                        
+                    } else {
+                          $('#logout-form').submit();
+                    }
+                    
                     });
                 });
             </script>
@@ -111,37 +138,53 @@
 
                         @if(Auth::check())
                             @if(Auth::user()->admin)
-                            <li class="nav-item"><a class="nav-link @yield('controlPanel-active')" href="{{ route('controlPanel.index') }}">{{ __('master.home') }}</a></li>
-                            <li class="nav-item"><a class="nav-link disabled @yield('predictionAdd-active')">{{ __('master.add') }}</a></li>
-                            <li class="nav-item"><a class="nav-link disabled @yield('predictionEdit-active')" >{{ __('master.edit') }}</a></li>
-                            <li class="nav-item"><a class="nav-link disabled @yield('predictionClose-active')" >{{ __('master.close') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @yield('controlPanel-active')" href="{{ route('controlPanel.index') }}">{{ __('master.home') }}</a></li>
+                                <li class="nav-item"><a class="nav-link disabled @yield('predictionAdd-active')">{{ __('master.add') }}</a></li>
+                                <li class="nav-item"><a class="nav-link disabled @yield('predictionEdit-active')" >{{ __('master.edit') }}</a></li>
+                                <li class="nav-item  pe-4"><a class="nav-link disabled @yield('predictionClose-active')" >{{ __('master.close') }}</a></li>
 
-                            <li class="nav-item"><a id="logout-action" class="nav-link text-danger" href="#" onclick="handleLogoutClick(event)">{{ __('master.log_out') }}</a>
-                                <form id="logout-form" action="{{ route('logout.destroy') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate)  }}</a></li>
+                                <li class="nav-item"><a id="isAdmin-action" class="nav-link text-primary" href="#">{{ __('master.change_logU') }}</a>
+                                    <form id="isAdmin-form" action="{{ route('userProfile.index') }}" method="GET" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="isAdmin" value="0">
+                                    </form>
+                                </li>
+                                <li class="nav-item"><a id="logout-action" class="nav-link text-danger" href="#">{{ __('master.log_out') }}</a>
+                                    <form id="logout-form" action="{{ route('logout.destroy') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate)  }}</a></li>
 
                             @else
-                            <li class="nav-item"><a class="nav-link @yield('home-active')" href="{{ route('home.index') }}">{{ __('master.home') }}</a></li>
-                            <li class="nav-item"><a class="nav-link @yield('prediction-active')" href="{{ route('prediction.create') }}">{{ __('master.predictions') }}</a></li>
-                            <li class="nav-item"><a class="nav-link @yield('ranking-active')" href="{{ route('ranking.index') }}">{{ __('master.ranking') }}</a></li>
-                            <li class="nav-item"><a class="nav-link @yield('userProfile-active')" href="{{ route('userProfile.index') }}">{{ __('master.profile') }}</a></li>
-                            <li class="nav-item"><a id="logout-action" class="nav-link text-danger" href="#" onclick="handleLogoutClick(event)">{{ __('master.log_out') }}</a>
-                                <form id="logout-form" action="{{ route('logout.destroy') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                            
-                            <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate)  }}</a></li>
+                                <li class="nav-item"><a class="nav-link @yield('home-active')" href="{{ route('home.index') }}">{{ __('master.home') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @yield('prediction-active')" href="{{ route('prediction.create') }}">{{ __('master.predictions') }}</a></li>
+                                <li class="nav-item"><a class="nav-link @yield('ranking-active')" href="{{ route('ranking.index') }}">{{ __('master.ranking') }}</a></li>
+                                <li class="nav-item pe-4"><a class="nav-link @yield('userProfile-active')" href="{{ route('userProfile.index') }}">{{ __('master.profile') }}</a></li>
+                                
+                                @if (Auth::user()->adminKey != null)
+                                    <li class="nav-item"><a id="isAdmin-action" class="nav-link text-primary" href="#">{{ __('master.change_logA') }}</a>
+                                        <form id="isAdmin-form" action="{{ route('home.index') }}" method="GET" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="isAdmin" value="1">
+                                        </form>
+                                    </li>
+                                @endif
+
+                                <li class="nav-item"><a id="logout-action" class="nav-link text-danger" href="#">{{ __('master.log_out') }}</a>
+                                    <form id="logout-form" action="{{ route('logout.destroy') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                                
+                                <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate)  }}</a></li>
 
                             @endif
                         @else
                             <li class="nav-item"><a class="nav-link @yield('home-active')" href="{{ route('home.index') }}">{{ __('master.home') }}</a></li>
                             <li class="nav-item"><a class="nav-link @yield('prediction-active')" href="{{ route('prediction.create') }}">{{ __('master.predictions') }}</a></li>
-                            <li class="nav-item"><a class="nav-link @yield('ranking-active')" href="{{ route('ranking.index') }}">{{ __('master.ranking') }}</a></li>
-                            <li class="nav-item pr-2" ><a class="nav-link text-primary @yield('login-active')" href="{{ route('login.create') }}">{{ __('master.log_in') }}</a></li>
+                            <li class="nav-item  pe-4"><a class="nav-link @yield('ranking-active')" href="{{ route('ranking.index') }}">{{ __('master.ranking') }}</a></li>
+                            <li class="nav-item" ><a class="nav-link text-primary @yield('login-active')" href="{{ route('login.create') }}">{{ __('master.log_in') }}</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('lang.edit', ['lang' => $langUpdate]) }}">{{ strtoupper($langUpdate) }}</a></li>
 
                         @endif

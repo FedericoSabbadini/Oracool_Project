@@ -13,9 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
+        // middleware globali
         $middleware->appendToGroup('web', [ 
             \App\Http\Middleware\LangStatus::class, 
-            \App\Http\Middleware\AuthStatus::class
+            \App\Http\Middleware\SessionStatus::class
         ]);
     
         $middleware->alias ([

@@ -52,8 +52,6 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        //\Log::info('Remember: ' . ($this->boolean('remember') ? 'true' : 'false'));
-
         RateLimiter::clear($this->throttleKey());
     }
 
