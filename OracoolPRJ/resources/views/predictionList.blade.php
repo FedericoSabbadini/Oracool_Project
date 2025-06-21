@@ -31,69 +31,14 @@
     @endif
 
     <script>
-        $(document).ready(function() {
-            var table = $('#dataTable').DataTable({
-                // Configurazioni generali
-
-
-                searching: true,            // Attiva ricerca
-                ordering: true,             // Attiva ordinamento
-                paging: true,               // Attiva paginazione
-                info: true,                 // Mostra info sulle righe visualizzate
-                lengthChange: true,         // Permetti di cambiare il numero di righe per pagina
-                autoWidth: false,           // Disabilita la larghezza automatica delle colonne
-                scrollX: false,             // Disabilita la barra di scorrimento orizzontale
-                pageLength: 8,             // Changed from 10 to 8 to match lengthMenu default
-
-                // Personalizzazione layout: ricerca e paginazione nella stessa riga sopra la tabella
-                dom: '<"row"<"col-6"f><"col-6 custom-pagination"p>>' +  // Per schermi più piccoli la paginazione e ricerca sono su righe separate
-                    '<"row"<"col-12"tr>>',// La tabella
-                // Personalizzare il comportamento delle colonne
-                columnDefs: [
-                    { 
-                        orderable: false, 
-                        targets: [1, 3] // Disabilita ordinamento sulla colonna della posizione
-
-                    }
-                ],
-
-                // Impostazioni per la ricerca
-                language: {
-                    search: "_INPUT_", // Cambia la ricerca da "Search" a un input più pulito
-                    searchPlaceholder: "{{ __('predictionList.search_placeholder') }}", // Usa il placeholder tradotto
-                    paginate: {
-                        previous: '<i class="fas fa-arrow-left"></i>',
-                        next: '<i class="fas fa-arrow-right"></i>'
-                    },
-                },
-
-                // Aggiungere altre funzionalità
-                responsive: true,  // Rende la tabella più responsive su dispositivi mobili
-                stateSave: true    // Salva lo stato della tabella (pagina, ordinamento, etc.)
-            });
-
-
-            table.state.clear();  // Cancella stato salvato
-            table.page.len(8).draw();  // Forza 8 righe e ridisegna
-
-            // Migliorare l'estetica del campo di ricerca
-            $('.dataTables_filter input').addClass('form-control').css({
-                'background-color': '#d7eaff', // Colore di sfondo
-                'height': '34px'          // Altezza uniforme con la barra di paginazione
-            });
-
-            // Uniformare l'altezza delle barre di paginazione e ricerca
-            $('.dataTables_length select').css('height', '38px'); // Altezza uniforme
-            $('.dataTables_paginate').css('height', '38px'); // Altezza uniforme
-
-            // modificare la distanza dalla barra di paginazione e centrarla nella riga 
-            $('.dataTables_paginate').css({
-                'margin-bottom': '20px', // Margine inferiore
-        });
-        
-            
-            $('#dataTable_wrapper').css('overflow-x', 'hidden'); // Disabilita la scrollbar orizzontale
-        $('#dataTable th').not(':nth-child(2), :nth-child(4)').css('cursor', 'pointer');
+        initializeDataTable('dataTable', {
+            pageLength: 8,
+            pagingType: "simple",       // Usa la paginazione semplice (precedente/successivo)
+            columnDefs: [{
+            orderable: false,
+            targets: [1, 3] // Disabilita ordinamento su colonne 1 e 3   
+            }],
+            order: [[0, 'desc']],
 
         });
     </script>
@@ -105,10 +50,10 @@
                 <table class="table table-striped table-bordered text-center table-hover align-middle" id="dataTable">
                     <thead class="table-dark ">
                         <tr>
-                            <th scope="col">{{ __('predictionList.orario') }}</th>
-                            <th scope="col">{{ __('predictionList.match') }}</th>
-                            <th class="pers-th d-none d-md-table-cell" scope="col">{{ __('predictionList.status') }}</th>
-                            <th scope="col">{{ __('predictionList.action') }}</th>
+                            <th class="col-2" scope="col">{{ __('predictionList.orario') }}</th>
+                            <th class="col-6" scope="col">{{ __('predictionList.match') }}</th>
+                            <th class="pers-th d-none d-md-table-cell col-2" scope="col">{{ __('predictionList.status') }}</th>
+                            <th class="col-2" scope="col">{{ __('predictionList.action') }}</th>
                         </tr>
                     </thead>                            
 

@@ -19,64 +19,8 @@
         </script>
     @endif
     <script>
-        $(document).ready(function() {
-            var table = $('#dataTable').DataTable({
-                // Configurazioni generali
-                pageLength: 10,             // Numero di righe per pagina
-                searching: true,            // Attiva ricerca
-                ordering: true,             // Attiva ordinamento
-                paging: true,               // Attiva paginazione
-                info: true,                 // Mostra info sulle righe visualizzate
-                lengthChange: true,         // Permetti di cambiare il numero di righe per pagina
-                autoWidth: false,           // Disabilita la larghezza automatica delle colonne
-                scrollX: false,             // Disabilita la barra di scorrimento orizzontale
-
-                // Personalizzazione layout: ricerca e paginazione nella stessa riga sopra la tabella
-                dom: '<"row"<"col-6"f><"col-6 custom-pagination"p>>' +  // Per schermi più piccoli la paginazione e ricerca sono su righe separate
-                    '<"row"<"col-12"tr>>',// La tabella
-                // Personalizzare il comportamento delle colonne
-                columnDefs: [
-                    { 
-                        orderable: false, 
-                        targets: 1 // Disabilita ordinamento sulla colonna della posizione
-
-                    }
-                ],
-
-                // Impostazioni per la ricerca
-                language: {
-                    search: "_INPUT_", // Cambia la ricerca da "Search" a un input più pulito
-                    searchPlaceholder: "{{ __('ranking.search_placeholder') }}", // Use translated placeholder
-                    paginate: {
-                        previous: '<i class="fas fa-arrow-left"></i>',
-                        next: '<i class="fas fa-arrow-right"></i>'
-                    },
-                },
-
-                // Aggiungere altre funzionalità
-                responsive: true,  // Rende la tabella più responsive su dispositivi mobili
-                stateSave: true    // Salva lo stato della tabella (pagina, ordinamento, etc.)
-            });
-
-            // Migliorare l'estetica del campo di ricerca
-            $('.dataTables_filter input').addClass('form-control').css({
-                'background-color': '#d7eaff', // Colore di sfondo
-                'height': '34px'          // Altezza uniforme con la barra di paginazione
-            });
-
-            // Uniformare l'altezza delle barre di paginazione e ricerca
-            $('.dataTables_length select').css('height', '38px'); // Altezza uniforme
-            $('.dataTables_paginate').css('height', '38px'); // Altezza uniforme
-
-            // modificare la distanza dalla barra di paginazione e centrarla nella riga 
-            $('.dataTables_paginate').css({
-                'margin-bottom': '20px', // Margine inferiore
-        });
-        
-            
-            $('#dataTable_wrapper').css('overflow-x', 'hidden'); // Disabilita la scrollbar orizzontale
-            $('#dataTable th:not(:nth-child(2))').css('cursor', 'pointer');
-
+        initializeDataTable('dataTable', {
+            pageLength: 10,
         });
     </script>
 
@@ -87,12 +31,12 @@
                 <table class="table table-striped table-bordered text-center table-hover align-middle" id="dataTable">
                     <thead class="table-dark ">
                         <tr>
-                            <th scope="col">{{ __('ranking.table_header_position') }}</th>
-                            <th scope="col">{{ __('ranking.table_header_user') }}</th>
-                            <th class="d-none d-md-table-cell" scope="col">{{ __('ranking.table_header_points') }}</th>
-                            <th class="pers-th d-none d-md-table-cell" scope="col">{{ __('ranking.table_header_predictions') }}</th>
-                            <th scope="col">{{ __('ranking.table_header_accuracy') }}</th>
-                            <th class="pers-th d-none d-lg-table-cell" scope="col">{{ __('ranking.table_header_update') }}</th>
+                            <th class="col-1" scope="col">{{ __('ranking.table_header_position') }}</th>
+                            <th class="col-4" scope="col">{{ __('ranking.table_header_user') }}</th>
+                            <th class="d-none d-md-table-cell col-1" scope="col">{{ __('ranking.table_header_points') }}</th>
+                            <th class="pers-th d-none d-md-table-cell col-2" scope="col">{{ __('ranking.table_header_predictions') }}</th>
+                            <th class="col-2" scope="col">{{ __('ranking.table_header_accuracy') }}</th>
+                            <th class="pers-th d-none d-lg-table-cell col-2" scope="col">{{ __('ranking.table_header_update') }}</th>
 
                         </tr>
                     </thead>                            

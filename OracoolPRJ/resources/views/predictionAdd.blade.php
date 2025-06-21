@@ -162,16 +162,19 @@
         }
         // Funzione per aggiornare le squadre per home_team e away_team
         function updateHome() {
-            
-            const city= cities[$("input[name='home_team']").val()];
-            if (city) {
-                $('#city').val(city);  // Imposta il valore del campo city con la città corrispondente
-            }
-            const stadiumName = stadium[$("input[name='home_team']").val()];
-            if (stadiumName) {
-                $('#stadium').val(stadiumName);  // Imposta il valore del campo stadium con lo stadio corrispondente
-            
-            }
+            const selectedCompetition = $('#competition').val();
+
+            if (selectedCompetition != 'FIFA Club World Cup') {
+                const city= cities[$("input[name='home_team']").val()];
+                if (city) {
+                    $('#city').val(city);  // Imposta il valore del campo city con la città corrispondente
+                }
+                const stadiumName = stadium[$("input[name='home_team']").val()];
+                if (stadiumName) {
+                    $('#stadium').val(stadiumName);  // Imposta il valore del campo stadium con lo stadio corrispondente
+                
+                }
+        }
         }
     
         

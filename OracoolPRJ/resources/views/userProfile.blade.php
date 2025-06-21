@@ -32,63 +32,20 @@
         </script>
     @endif
 
-<script>
-    $(document).ready(function() {
-        var table = $('#dataTable').DataTable({
-            // Configurazioni generali
-            pageLength: 9,             // Numero di righe per pagina
-            searching: false,           // Disattiva ricerca
-            ordering: true,             // Attiva ordinamento
-            paging: true,               // Attiva paginazione
-            info: false,                 // Mostra info sulle righe visualizzate
-            lengthChange: true,         // Permetti di cambiare il numero di righe per pagina
-            autoWidth: false,           // Disabilita la larghezza automatica delle colonne
-            scrollX: false,             // Disabilita la barra di scorrimento orizzontale
-
-            // Personalizzazione layout: ricerca e paginazione nella stessa riga sopra la tabella
-            dom: 
-                '<"row"<"col-12"tr>>' + 
-                '<"row"<"col-12 custom-pagination"p>>', // La tabella
-
-            columnDefs: [
-                { 
-                    orderable: false, 
-                    targets: [1, 3], // Disabilita ordinamento sulla colonna della posizione
-                }
-            ],
-
-             order: [[0, 'desc']],
-
-            // Impostazioni per la ricerca
-            language: {
-                paginate: {
-                    previous: '<i class="fas fa-arrow-left"></i>',
-                    next: '<i class="fas fa-arrow-right"></i>'
-                },
-            },
-
-            // Aggiungere altre funzionalità
-            responsive: true,  // Rende la tabella più responsive su dispositivi mobili
-            stateSave: true    // Salva lo stato della tabella (pagina, ordinamento, etc.)
+    <script>
+        initializeDataTable('dataTable', {
+            pageLength: 9,
+            pagingType: "simple",       // Usa la paginazione semplice (precedente/successivo)
+            columnDefs: [{
+            orderable: false,
+            targets: [1, 3] // Disabilita ordinamento su colonne 1 e 3   
+            }],
+            order: [[0, 'desc']],
+            dom: '<"row"<"col-12"tr>>' + 
+                 '<"row"<"col-12 custom-pagination"p>>',
         });
+    </script>
 
-        table.state.clear();  // Cancella stato salvato
-        table.page.len(9).draw();  // Forza 8 righe e ridisegna
-
-        // Uniformare l'altezza delle barre di paginazione e ricerca
-        $('.dataTables_length select').css('height', '38px'); // Altezza uniforme
-        $('.dataTables_paginate').css('height', '38px'); // Altezza uniforme
-
-        // Modificare la distanza dalla barra di paginazione e centrarla nella riga 
-        $('.dataTables_paginate').css({
-            'margin-top': '10px' // Margine inferiore
-        });
-
-        $('#dataTable_wrapper').css('overflow-x', 'hidden'); // Disabilita la scrollbar orizzontale
-        $('#dataTable th').not(':nth-child(2), :nth-child(4)').css('cursor', 'pointer');
-
-    });
-</script>
 
         <div class="row bg-gradient-secondary justify-content-center py-4">
         <!-- Info Utente -->
@@ -123,10 +80,10 @@
                 <table class="table table-striped text-center align-middle table-hover table-bordered" id="dataTable">
                     <thead class="table-dark ">
                     <tr>
-                        <th class="pers-th">{{ __('userProfile.history_date') }}</th>
-                        <th>{{ __('userProfile.history_match') }}</th>
-                        <th class="pers-th d-none d-md-table-cell" scope="col">{{ __('userProfile.history_prediction') }}</th>
-                        <th>{{ __('userProfile.history_result') }}</th>
+                        <th class="pers-th col-2">{{ __('userProfile.history_date') }}</th>
+                        <th class="col-6">{{ __('userProfile.history_match') }}</th>
+                        <th class="pers-th d-none d-md-table-cell col-2" scope="col">{{ __('userProfile.history_prediction') }}</th>
+                        <th class="col-2">{{ __('userProfile.history_result') }}</th>
                     </tr>
                     </thead>
                     <tbody>
