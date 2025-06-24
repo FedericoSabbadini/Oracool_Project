@@ -5,6 +5,7 @@
         <i class="bi bi-arrow-left"></i>
     </a>
 @endsection
+
 @section('head', __('predictionAdd.page_title'))
 
 @section('predictionAdd-active', 'active')
@@ -14,11 +15,11 @@
     <script>
         $(document).ready(function() {
             
-            let error = false;
-            
+            let error = false;            
 
             //football control
             $("#football-form").submit(function(event) {
+                event.preventDefault();
 
                 const seasonRequired = @json('24/25'); 
                 const quote_1Required = @json('1.01'); 
@@ -131,8 +132,27 @@
                     error = true;
                 }
 
+                if (!error) {                
+                    // Check if there are other predictions for the same match
+                    $.ajax({
+                        type: "GET",
+                        url:  "{{ route('predictionAdd.storeAjax') }}",
+                        data: {
+                            home_team: $("input[name='home_team']").val(),
+                            away_team: $("input[name='away_team']").val(),
+                            competition: $('#competition').val()
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                document.getElementById("football-form").submit();
+                            } else {
+                                toastr.error(response.error);      
+                                document.getElementById("football-form").reset();
+                            }
+                        },
+                    });
+                }
             })
-
 
         const teams = @json($teams);
         const countries = @json($countries);
@@ -140,7 +160,8 @@
         const stadium = @json($stadiums);
         const competitions = @json($competitions);
         
-        // Funzione per aggiornare le squadre per home_team e away_team
+
+        // Initialize autocomplete for home_team and away_team
         function updateTeams() {
             const selectedCompetition = $('#competition').val();
             const availableTeams = teams[selectedCompetition] || [];
@@ -156,63 +177,30 @@
         
             const country = countries[selectedCompetition];
             if (country) {
-                $('#country').val(country);  // Imposta il valore del campo country con il paese corrispondente
+                $('#country').val(country); 
             }
 
         }
-        // Funzione per aggiornare le squadre per home_team e away_team
+
+        // Update the home team city and stadium based on the selected home team
         function updateHome() {
             const selectedCompetition = $('#competition').val();
 
             if (selectedCompetition != 'FIFA Club World Cup') {
                 const city= cities[$("input[name='home_team']").val()];
                 if (city) {
-                    $('#city').val(city);  // Imposta il valore del campo city con la città corrispondente
+                    $('#city').val(city);  
                 }
                 const stadiumName = stadium[$("input[name='home_team']").val()];
                 if (stadiumName) {
-                    $('#stadium').val(stadiumName);  // Imposta il valore del campo stadium con lo stadio corrispondente
-                
+                    $('#stadium').val(stadiumName); 
                 }
+            }
         }
-        }
-    
         
         $('#competition').on('change', updateTeams);
         $('#home_team').on('change', updateHome);
         updateTeams();
-
-
-        // addPrediciton button click event
-        let clickedOnce = false;
-        $('#predictionAdd-action').on('click', function (e) {
-            const $btn = $(this);
-            const originalText = "{{ __('predictionAdd.add_button') }}";
-            const confirmText = "{{ __('predictionAdd.confirm_add_button') }}";
-
-            if (!clickedOnce && !error) {
-                e.preventDefault(); 
-                clickedOnce = true;
-
-                $btn
-                    .val(confirmText)
-                    .addClass('btn-danger vibrate')
-                    .removeClass('btn-primary');
-
-
-                    setTimeout(() => {
-                    $btn.removeClass('vibrate');
-                }, 600);
-                setTimeout(() => {
-                    clickedOnce = false;
-                    $btn
-                        .val(originalText)
-                        .removeClass('btn-danger')
-                        .addClass('btn-primary');
-                }, 5000);
-            }
-        });
-
     });
     </script>
 

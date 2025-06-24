@@ -10,6 +10,11 @@ use App\Models\PredictionFootball;
  */
 class PredictionFootballFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var class-string<\Illuminate\Database\Eloquent\Model>
+     */
     protected $model = PredictionFootball::class;
     
     /**
@@ -19,12 +24,12 @@ class PredictionFootballFactory extends Factory
      */
     public function definition(): array
     {
-        $predicted_1 = $this->faker->boolean(33); // 30%
+        $predicted_1 = $this->faker->boolean(33);
         if ($predicted_1) {
             $predicted_X = false;
             $predicted_2 = false;
         } else {
-            $predicted_2 = $this->faker->boolean(33); // 30%
+            $predicted_2 = $this->faker->boolean(33);
             if ($predicted_2) {
                 $predicted_X = false;
             } else {
@@ -32,7 +37,6 @@ class PredictionFootballFactory extends Factory
             }
         }
         
-
         return [
             'predicted_1' => $predicted_1,
             'predicted_X' => $predicted_X,

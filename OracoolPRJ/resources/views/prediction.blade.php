@@ -1,13 +1,10 @@
 @extends('layouts.primary')
 
-
 @section('head', __('prediction.page_title'))
 
 @section('prediction-active', 'active')
 
-
 @section('body-hero')
-
     @if(session('success'))
         <script>
             toastr.success("{{ session('success') }}");
@@ -20,7 +17,6 @@
         </script>
     @endif
     
-  
   <h1 class="display-4 fw-bold">{{ __('prediction.heading') }}</h1>
   <p class="lead mt-3 mx-3">{{ __('prediction.subheading') }}</p>
   <div class="date-display align-items-center justify-content-center mt-2">
@@ -36,7 +32,6 @@
     @csrf
     <div class="row g-5 justify-content-center">
 
-      <!-- Partite -->
        @foreach ($eventsFootball as $eventFootball)
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
         <div class="card bg-light-secondary border-0 shadow-sm">
@@ -47,7 +42,6 @@
             {{ __('prediction.match_location_separator') }} {{$eventFootball->stadium}}</p>
 
             @php
-              
               $footballId = $eventFootball->id;
               $result = 'null';
               $prediction = 'null';
@@ -117,21 +111,16 @@
                 <label class="btn btn-outline-primary {{$prediction=='2' ? $btnPrediction: ''}}" for="{{$footballId}}-2">{{ __('prediction.button_away_win') }}</label>
               @endif
             </div>
-            
             <p class="pt-2 mb-0 {{$testStatus}}">{{$eventFootball->status}}</p>
-
           </div>
         </div>
       </div>
       @endforeach
 
-
-      <!-- Pulsante invio -->
       <div class="col-12 text-center mt-4">
         @php 
           $disabled = '';
           if(isset($error))
-
             $disabled='disabled'
         @endphp
         <button type="submit" class="btn btn-primary btn-lg px-4 mt-3" {{ $disabled }}>

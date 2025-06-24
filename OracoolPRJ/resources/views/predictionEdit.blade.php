@@ -10,10 +10,9 @@
 
 @section('predictionEdit-active', 'active')
 
-
 @section('body')
 
-<script>
+    <script>
         $(document).ready(function() {
             
             //football control
@@ -100,9 +99,6 @@
                     $("input[name='start_time']").removeClass("error-input-val");
                 }
             })
-
-
-
         });
     </script>
 
@@ -119,7 +115,7 @@
             </ul>
 
             <div class="tab-content mt-4" id="authTabContent">
-                <div class="tab-pane fade show active" id="football" role="tabpanel"> <!--riprende #login---->
+                <div class="tab-pane fade show active" id="football" role="tabpanel"> 
 
                     <form action="{{ route('predictionEdit.edit', ['predictionEdit'=>$eventFootball->id]) }}" method="GET" id="football-form">
                         @csrf
@@ -127,7 +123,7 @@
                         
                         <div class="row">
                             <div class="col-8 mb-3">
-                                <input type="text" name="competition" class="form-control custom-input-form" placeholder="{{$eventFootball->competition}}" />
+                                <input type="text" name="competition" class="form-control custom-input-form" placeholder="{{$eventFootball->competition}}" disabled/>
                             </div>
                             <div class="col-4 mb-3">
                                 <input type="text" name="season" class="form-control custom-input-form" placeholder="{{$eventFootball->season}}"  />
@@ -193,7 +189,6 @@
                             <input type="submit" class="btn btn-warning" value="{{ __('predictionEdit.edit_button') }}">
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

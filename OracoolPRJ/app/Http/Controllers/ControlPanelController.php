@@ -6,13 +6,28 @@ use Illuminate\Http\Request;
 use App\Models\DataLayer;
 use App\Models\EventFootball;
 
+/**
+ * ControlPanelController handles the control panel functionalities.
+ * It provides methods to display the control panel, create or edit predictions,
+ * and close predictions for football events.
+ */
 class ControlPanelController extends Controller
 {
+    /**
+     * Display the control panel view.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('controlPanel');
     }
 
+    /**
+     * Create a new prediction.
+     *
+     * @return \Illuminate\View\View
+     */
     public function createEdit()
     {
         $eventsFootball = EventFootball::where('status','!=', 'ended')->where('status','!=', 'deleted')->get();
@@ -23,9 +38,14 @@ class ControlPanelController extends Controller
             return view('predictionList', ['eventsFootball' => $eventsFootball, 'action' => 'edit']);
         }
     }
+
+    /**
+     * Close predictions for football events.
+     *
+     * @return \Illuminate\View\View
+     */
     public function createClose()
     {
-    
         $eventsFootball = EventFootball::where('status', 'in_progress')->get();
 
         if($eventsFootball->isEmpty()){
@@ -34,6 +54,5 @@ class ControlPanelController extends Controller
             return view('predictionList', ['eventsFootball' => $eventsFootball, 'action' => 'close']);
 
         }
-    
     }
 }

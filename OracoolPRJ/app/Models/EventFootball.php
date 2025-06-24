@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *  EventFootball model represents a football event in the application.
+ *  It contains properties such as home team, away team, scores, start time, competition,
+ *  season, stadium, city, country, status, live block, and betting quotes.
+ *  It also defines a relationship with the Event model.
+ */
 class EventFootball extends Model
 {
     protected $table = 'events_football';
     // protected primaryKey = 'id'
     protected $fillable = [
-        'id', // Foreign key to Event
+        'id', 
         'home_team',
         'away_team',
         'home_score',
@@ -29,7 +35,7 @@ class EventFootball extends Model
     protected $casts = [
         'start_time' => 'datetime',
     ];
-    public $timestamps = false; // Disabilita i timestamp automatici
+    public $timestamps = false; 
 
     public function event()
     {

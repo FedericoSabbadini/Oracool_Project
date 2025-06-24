@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 return [
     'auth'                      => [
-        'failed' => 'Queste credenziali non corrispondono ai nostri record.',
+        'failed' => 'Queste credenziali non sono corrette.',
     ],
     'authAdmin'                 => [
-        'failed' => 'Queste credenziali non corrispondono ai nostri record. Assicurati di essere un amministratore.',
+        'failed' => 'Questa chiave non è corretta.',
     ],
     'confirm_password'          => 'Conferma Password',
     'email_required'            => 'E-mail richiesta',

@@ -1,10 +1,8 @@
 @extends('layouts.master')
 
-
 @section('head', __('ranking.page_title'))
 
 @section('ranking-active', 'active')
-
 
 @section('body')
     @if(session('success'))
@@ -18,6 +16,7 @@
             toastr.error("{{ session('error') }}");
         </script>
     @endif
+
     <script>
         initializeDataTable('dataTable', {
             pageLength: 10,
@@ -25,7 +24,6 @@
     </script>
 
     <div class="row bg-gradient-secondary justify-content-center pt-2 pb-3 px-4">
-        
         <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
             <div class="table-responsive my-5">
                 <table class="table table-striped table-bordered text-center table-hover align-middle" id="dataTable">

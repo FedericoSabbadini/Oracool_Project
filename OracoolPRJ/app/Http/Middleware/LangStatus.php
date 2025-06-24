@@ -10,16 +10,25 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 
+/**
+ * LangStatus middleware sets the application locale based on the session language.
+ * It ensures that the application uses the correct language for the user.
+ */
 class LangStatus
 {
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): \Symfony\Component\HttpFoundation\Response  $next
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function handle(Request $request, Closure $next)
     {
         if (session('language')) {
             app()->setLocale(session('language'));
-            Log::info("Lingua: " . App::getLocale() . ", Fuso orario: " . Carbon::now()->timezoneName);     
         } 
 
         return $next($request);
     }
-
 }

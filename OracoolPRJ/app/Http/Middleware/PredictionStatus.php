@@ -8,17 +8,23 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Event;
 use App\Models\EventFootball;
 
+/**
+ * PredictionStatus middleware updates the status of events and their associated football events.
+ * It checks the current time against event start times to update statuses accordingly.
+ */
 class PredictionStatus
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request and update event statuses.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): \Illuminate\Http\Response  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response // 'scheduled', 'in_progress', 'ended', 'deleted'
     {
 
-         $events = Event::all();
+        $events = Event::all();
         foreach ($events as $event) {
             if ($event->start_time <= now() && $event->status === 'scheduled') {
                 $event->status = 'in_progress';
@@ -28,7 +34,7 @@ class PredictionStatus
                 $event->status = 'scheduled';
                 $event->save();
             }
-            }
+        }
 
         $eventsFootball = EventFootball::all();
         foreach ($eventsFootball as $eventFootball) {

@@ -4,7 +4,6 @@
 
 @section('home-active', 'active')
 
-
 @section('body-hero')
     @if(session('success'))
         <script>
@@ -72,7 +71,6 @@
                     <p class="text-muted">{{ __('index.feature_growth_text') }}</p>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

@@ -10,6 +10,10 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * LoginRequest handles the validation and authentication logic for user login requests.
+ * It includes rate limiting to prevent brute force attacks.
+ */
 class LoginRequest extends FormRequest
 {
     /**
@@ -45,7 +49,7 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
-            session()->flash('error', 'Invalid credentials');
+            session()->flash('error', __('auth.failed'));
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
@@ -55,6 +59,11 @@ class LoginRequest extends FormRequest
         RateLimiter::clear($this->throttleKey());
     }
 
+    /**
+     * Attempt to authenticate the request's credentials as an admin.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function authenticateAdmin(): void
     {
         $this->ensureIsNotRateLimited();
@@ -62,8 +71,7 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'))) {
             RateLimiter::hit($this->throttleKey());
             
-            // Add this line to flash the error message to the session
-            session()->flash('error', 'Invalid credentials');
+            session()->flash('error', __('auth.failed'));
 
             throw ValidationException::withMessages([
             'email' => trans('auth.failed'),
@@ -75,8 +83,10 @@ class LoginRequest extends FormRequest
             Auth::logout();
             RateLimiter::hit($this->throttleKey());
     
+            session()->flash('error', __('auth.authAdmin.failed'));
+
             throw ValidationException::withMessages([
-                'email' => trans('authAdmin.failed'),
+                'email' => trans('auth.authAdmin.failed'),
             ]);
         }
 

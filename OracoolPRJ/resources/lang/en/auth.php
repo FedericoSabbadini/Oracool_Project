@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 return [
     'auth'                      => [
-        'failed' => 'These credentials do not match our records.',
+        'failed' => 'These credentials do not match.',
     ],
     'authAdmin'                 => [
-        'failed' => 'These credentials do not match our records. Make sure you are an administrator.',
+        'failed' => 'The key does not match.',
     ],
     'confirm_password'          => 'Confirm Password',
     'email_required'            => 'Email required',

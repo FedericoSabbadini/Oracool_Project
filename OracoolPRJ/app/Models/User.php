@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ *  User model represents a user in the application.
+ *  It contains properties such as name, email, password, points, and ranking position.
+ *  It defines relationships with predictions and handles password hashing and email verification.
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -46,7 +51,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
 
     public function predictions()
     {

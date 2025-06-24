@@ -10,6 +10,11 @@ use App\Models\Event;
 use App\Models\User;
 use App\Models\EventFootball;
 
+/**
+ * Class PredictionSeeder
+ *
+ * Seeder for populating the predictions table with user predictions for events.
+ */
 class PredictionSeeder extends Seeder
 {
     /**
@@ -20,8 +25,8 @@ class PredictionSeeder extends Seeder
         $userIds = User::pluck('id')->toArray();
         $eventIds = Event::pluck('id')->toArray();
 
-        $combinations = collect($userIds) //crea collezione
-            ->crossJoin($eventIds) //prodotto cartesiano
+        $combinations = collect($userIds) 
+            ->crossJoin($eventIds) 
             ->shuffle();
 
         foreach ($combinations as [$userId, $eventId]) {
@@ -56,6 +61,7 @@ class PredictionSeeder extends Seeder
                 }
                 $prediction->save();
             }
+
             // Aggiungi qui altre condizioni per altri tipi di eventi, con le rispettive factory
         }
     }

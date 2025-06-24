@@ -12,8 +12,7 @@
 
 @section('body')
 
-
-<script>
+    <script>
         $(document).ready(function() {
             
             //football control
@@ -24,9 +23,8 @@
                 var away_score = $("input[name='away_score']").val();
                 var resultRegex =/^\d{1,2}$/;
                 var error = false;
-
                 
-                 if (home_score.trim() !== "" && !resultRegex.test(home_score)) {
+                if (home_score.trim() !== "" && !resultRegex.test(home_score)) {
                     event.preventDefault();
                     $("input[name='home_score']").val(result_Required);
                     $("input[name='home_score']").addClass("error-input-val");
@@ -52,13 +50,9 @@
                     !error && $("input[name='away_score']").focus();
                     error = true;
                 }
-
-
             });
 
-
-            
-
+        
             let clickedOnce = false;
             $('#predictionClose-action').on('click', function (e) {
                 const $btn = $(this);
@@ -68,7 +62,6 @@
                 if (!clickedOnce) {
                     e.preventDefault(); 
                     clickedOnce = true;
-
                     $btn
                         .val(confirmText)
                         .addClass('btn-danger vibrate')
@@ -78,6 +71,8 @@
                         setTimeout(() => {
                         $btn.removeClass('vibrate');
                     }, 600);
+                    
+                    // Submit the form after a delay
                     setTimeout(() => {
                         clickedOnce = false;
                         $btn
@@ -87,8 +82,6 @@
                     }, 5000);
                 }
             });
-
-
         });
     </script>
 

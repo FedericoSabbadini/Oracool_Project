@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DataLayer;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
-
+/**
+ * PredictionAddController handles the creation and storage of predictions.
+ * It provides methods to display the prediction form and store predictions in the database.
+ */
 class PredictionAddController extends Controller
 {
 
+    /**
+     * Display the prediction creation form.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         $clubData = include resource_path('data/clubData.php');
@@ -23,9 +32,15 @@ class PredictionAddController extends Controller
     ]);;
     }
 
+    /**
+     * Store a new prediction in the database.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function store(Request $request)
     {
-
         $dl = new DataLayer();
         $start_time = Carbon::createFromFormat('d-m-Y, H:i', $request->input('start_time'));
     
@@ -48,7 +63,28 @@ class PredictionAddController extends Controller
             default:
                 throw new \Exception("Invalid event type");
         }
-
         return redirect()->route('controlPanel.index')->with('success', __('error.prediction-added-successfully'));
+    }
+
+    /**
+     * Store a new prediction via AJAX.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeAjax (Request $request) {
+
+        $dl = new DataLayer();
+        $exists = $dl->detectIfExixtsEventFootball(
+            $request->input('home_team'),
+            $request->input('away_team'),
+            $request->input('competition')
+        );
+
+        if ($exists) {
+           return response()->json(['error' => __('error.event-already-exists')]);
+        } else {
+            return response()->json(['success' => __('error.event-not-found')]);
+        }
     }
 }

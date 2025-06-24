@@ -8,9 +8,20 @@ use App\Models\DataLayer;
 use Carbon\Carbon;
 use App\Models\Event;
 
+/**
+ * PredictionEditController handles the editing of predictions for football events.
+ * It provides methods to display the edit form and update predictions in the database.
+ */
 class PredictionEditController extends Controller
 {
 
+    /**
+     * Display the prediction edit form for a specific event.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
     public function show($id)
     {
         $event = Event::findOrFail($id);
@@ -24,6 +35,14 @@ class PredictionEditController extends Controller
         return view('predictionEdit', ['eventFootball' => $eventFootball]);
     }
 
+    /**
+     * Update the prediction for a specific event.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function edit(Request $request, $id)
     {
         $dl = new DataLayer();

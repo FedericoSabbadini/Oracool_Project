@@ -4,20 +4,20 @@
  * @param {Object} options - Opzioni personalizzate per sovrascrivere quelle di default
  */
 function initializeDataTable(tableId = 'dataTable', options = {}) {
-
     $(document).ready(function () {
-        // Configurazione di default
+
         const defaultConfig = {
             // Configurazioni generali
-            pageLength: 10,             // Numero di righe per pagina
-            searching: true,            // Attiva ricerca
-            ordering: true,             // Attiva ordinamento
-            paging: true,               // Attiva paginazione
-            info: true,                 // Mostra info sulle righe visualizzate
-            lengthChange: true,         // Permetti di cambiare il numero di righe per pagina
-            autoWidth: false,           // Disabilita la larghezza automatica delle colonne
-            scrollX: false,             // Disabilita la barra di scorrimento orizzontale
-            pagingType: "simple_numbers", // Tipo di paginazione (numeri semplici)
+            pageLength: 10,                     // Numero di righe per pagina
+            searching: true,                    // Attiva ricerca
+            ordering: true,                     // Attiva ordinamento
+            paging: true,                       // Attiva paginazione
+            info: true,                         // Mostra info sulle righe visualizzate
+            lengthChange: true,                 // Permetti di cambiare il numero di righe per pagina
+            autoWidth: false,                   // Disabilita la larghezza automatica delle colonne
+            scrollX: false,                     // Disabilita la barra di scorrimento orizzontale
+            pagingType: "simple_numbers",       // Tipo di paginazione (numeri semplici)
+            responsive: true,                   // Rende la tabella reattiva
 
             // Personalizzazione layout: ricerca e paginazione nella stessa riga sopra la tabella
             dom: '<"row"<"col-6"f><"col-6 custom-pagination"p>>' +  // Per schermi più piccoli la paginazione e ricerca sono su righe separate
@@ -41,9 +41,6 @@ function initializeDataTable(tableId = 'dataTable', options = {}) {
                     next: '<i class="fas fa-arrow-right"></i>'
                 },
             },
-
-            // Aggiungere altre funzionalità
-            responsive: true,  // Rende la tabella più responsive su dispositivi mobili
         };
 
         // Unisce la configurazione di default con le opzioni personalizzate
@@ -57,26 +54,42 @@ function initializeDataTable(tableId = 'dataTable', options = {}) {
     });
 }
 
-/**
- * Applica gli stili personalizzati alla DataTable
- * @param {string} tableId - ID della tabella
- */
+
 function applyCustomStyles(tableId) {
+
     // Migliorare l'estetica del campo di ricerca
     $('.dataTables_filter input').addClass('form-control').css({
-        'background-color': '#d7eaff', // Colore di sfondo
-        'height': '34px'          // Altezza uniforme con la barra di paginazione
+        'background-color': '#d7eaff',
+        'height': '34px'
     });
 
     // Uniformare l'altezza delle barre di paginazione e ricerca
-    $('.dataTables_length select').css('height', '38px'); // Altezza uniforme
-    $('.dataTables_paginate').css('height', '38px'); // Altezza uniforme
+    $('.dataTables_length select').css('height', '38px');
+    $('.dataTables_paginate').css('height', '38px');
 
     // Modificare la distanza dalla barra di paginazione e centrarla nella riga
     $('.dataTables_paginate').css({
-        'margin-bottom': '20px', // Margine inferiore
+        'margin-bottom': '20px',
     });
 
-    $('#' + tableId + '_wrapper').css('overflow-x', 'hidden'); // Disabilita la scrollbar orizzontale
-    $('#' + tableId + ' th:not(:nth-child(2))').css('cursor', 'pointer');
+    // Disabilita la scrollbar orizzontale
+    $('#' + tableId + '_wrapper').css('overflow-x', 'hidden');
+
+    // Aggiungi un cursore a tutte le intestazioni tranne la seconda colonna
+    $('#' + tableId).css('cursor', 'pointer');
 }
+
+// Esempio di utilizzo
+//
+// <script> initializeDataTable('myTableId', { pageLength: 20, searching: false }); </script>
+//
+// <script> 
+// initializeDataTable('myTableId', {
+//     columnDefs: [
+//         { targets: 0, orderable: false }, // Disabilita ordinamento
+//         { targets: 1, className: 'dt-body-center' } // Centra il testo della colonna
+//     ],   
+//     order: [[1, 'desc']] // Ordina per la seconda colonna in ordine discendente
+// }); 
+// </script>
+//

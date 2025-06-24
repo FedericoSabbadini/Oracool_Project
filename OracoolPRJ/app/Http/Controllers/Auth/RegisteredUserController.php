@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+
+/** 
+ * RegisteredUserController handles user registration.
+ * It provides methods to display the registration form and handle the registration request.
+ */
 class RegisteredUserController extends Controller
 {
     /**

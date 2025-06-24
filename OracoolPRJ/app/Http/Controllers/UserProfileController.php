@@ -14,8 +14,17 @@ use App\Models\PredictionFootball;
 use App\Models\EventFootball;
 use App\Models\User;
 
+/**
+ * UserProfileController handles the display of user profiles and their predictions.
+ * It provides methods to show the user's own profile or another user's profile.
+ */
 class UserProfileController extends Controller
 {
+    /**
+     * Display the user's own profile with their predictions.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $user= Auth::user();;
@@ -39,6 +48,13 @@ class UserProfileController extends Controller
         ]);
     }
 
+    /**
+     * Display another user's profile with their predictions.
+     *
+     * @param int $userId
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
     public function show($userId)
     {
         $user = User::findOrFail($userId);
@@ -60,6 +76,4 @@ class UserProfileController extends Controller
             'user' => $user,
         ]);
     }
-
-
 }

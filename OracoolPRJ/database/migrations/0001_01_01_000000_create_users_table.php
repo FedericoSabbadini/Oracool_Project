@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Create the users, password_reset_tokens, and sessions tables.
+ */
 return new class extends Migration
 {
     /**

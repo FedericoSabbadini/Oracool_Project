@@ -10,7 +10,8 @@ return [
     'close' => 'Chiudi',
     'orario' => 'Orario',
 
-    'quotes' => 'Aggiorna quote',
+    'quotes' => 'Quote',
+    'matches' => 'Partite',
     'matches_updated' => 'Partite aggiornate: :count',
     'no_matches_updated' => 'Nessuna partita aggiornata. Riprova più tardi.',
     'no_matches_found' => 'Nessuna partita trovata / Quota di utilizzo raggiunta.',

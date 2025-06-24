@@ -8,13 +8,11 @@
 
 @section('head', __('predictionList.page_title'))
 
-
 @if ($action === 'edit')
     @section('predictionEdit-active', 'active')
 @else
     @section('predictionClose-active', 'active')
 @endif
-
 
 @section('body')
 
@@ -36,15 +34,13 @@
             pagingType: "simple",       // Usa la paginazione semplice (precedente/successivo)
             columnDefs: [{
             orderable: false,
-            targets: [1, 3] // Disabilita ordinamento su colonne 1 e 3   
+            targets: [3]                // Disabilita ordinamento su colonne 1 e 3   
             }],
             order: [[0, 'desc']],
-
         });
     </script>
 
     <div class="row bg-gradient-secondary justify-content-center pt-2 pb-3 px-4">
-        
         <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
             <div class="table-responsive mt-5">
                 <table class="table table-striped table-bordered text-center table-hover align-middle" id="dataTable">
@@ -77,7 +73,6 @@
                                 <td>{{ $homeTeam }} <span class="text-secondary small">vs</span> {{ $awayTeam }}</td>
                                 <td class="d-none d-md-table-cell">{{ $status }}</td>
                                 <td>
-                                    <!-- Bottone con il colore dinamico -->
                                     <a href="{{ $href }}" class="btn {{ $buttonClass }} btn-sm">{{ $buttonText }}</a>
                                 </td>
                             </tr>
@@ -89,9 +84,15 @@
             @if ($action === 'edit')
                 <div class="row align-items-end mt-2 mb-4">
                     <div class="col-12 d-flex justify-content-end">
+                        <form action="{{ route('admin.matches.update') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sync-alt"></i>  Matches
+                            </button>
+                        </form>
                         <form action="{{ route('admin.odds.update') }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-warning">
+                            <button type="submit" class="btn btn-warning  ms-2">
                                 <i class="fas fa-sync-alt"></i> {{ __('predictionList.quotes') }}
                             </button>
                         </form>

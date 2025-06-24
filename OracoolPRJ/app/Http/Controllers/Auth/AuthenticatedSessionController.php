@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 
 
+/**
+ * AuthenticatedSessionController handles user authentication and session management.
+ * It provides methods for login, logout, and checking email existence.
+ */
 class AuthenticatedSessionController extends Controller
 {
     /** Displays login view */
@@ -21,10 +25,14 @@ class AuthenticatedSessionController extends Controller
         return view('auth');
     }
 
-    /** Handles user authentication */
+    /** Authenticates user with/without admin key */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        if ($request->input('key') != "") {
+            $request->authenticateAdmin();
+        } else {
+            $request->authenticate();
+        }
 
         $request->session()->regenerate();
 
@@ -33,20 +41,7 @@ class AuthenticatedSessionController extends Controller
         $user->save();
 
         return redirect()->intended(route('userProfile.index', absolute: false))->with('success', __('error.logged'));
-    }
-
-    /** Handles admin authentication */
-    public function storeAdmin(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticateAdmin();
-
-        $request->session()->regenerate();
         
-        $user = Auth::user();
-        $user->admin=true;
-        $user->save();
-
-        return redirect()->intended(route('controlPanel.index', absolute: false))->with('success', __('error.logged'));
     }
 
     /** Logs out user */
@@ -70,6 +65,19 @@ class AuthenticatedSessionController extends Controller
             return response()->json(['exists' => true]);
         } else {
             return response()->json(['exists' => false]);
+        }
+    }
+
+    /** Checks if a key exists in the database */
+    public function checkKey(Request $request): JsonResponse
+    {
+        $email = $request->input('email');
+        $user = DB::table('users')->where('email', $email)->first();
+
+        if ($user && $user->adminKey != null) {
+            return response()->json(['admin' => true]);
+        } else {
+            return response()->json(['admin' => false]);
         }
     }
 }

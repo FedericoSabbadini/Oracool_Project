@@ -1,21 +1,18 @@
+/* Base styles for the application */
 body {
     background-color: #212529;
     overflow-x: hidden;
 }
 
 .bg-gradient-secondary {
-
     background: linear-gradient(to bottom, #0a81ff 40%, #ffffff);
-    /* blu */
     padding: 10px;
-    /* Aggiunge un po' di spazio interno */
     flex: 1;
 }
 
 .separator {
     height: 56px;
 }
-
 
 footer {
     height: 55px;
@@ -26,46 +23,32 @@ footer {
 
 .container-fluid {
     min-height: calc(100vh - 56px - 55px);
-    /*nav56 e footer55*/
-
     display: flex;
     flex-direction: column;
     padding-left: 0px;
     padding-right: 0px;
 }
 
-
 .bg-light {
     flex: 1;
     background-color: #e5f1ff !important;
-
-
 }
 
 .bg-light-secondary {
     background-color: #ffffff !important;
-    /* Colore di sfondo */
     color: #212529;
-    /* Colore del testo */
-
 }
 
 .not-last {
     margin-bottom: 20px;
-    /* Aggiunge spazio tra le colonne */
 }
 
 small.footer {
     font-size: 0.8em;
-    /* Dimensione del testo */
     color: #fff9f9c5;
     font-style: italic;
-    /* Corsivo */
 }
 
-
-
-/* Navbar Toggler */
 .navbar-toggler {
     border: none;
     padding: 0.5rem;
@@ -76,71 +59,51 @@ small.footer {
 .navbar-toggler:focus,
 .navbar-toggler:active {
     outline: none;
-    /* Rimuove il contorno */
     box-shadow: none;
-    /* Rimuove l'ombra */
 }
 
 .navbar-toggler:hover {
     background-color: rgba(200, 200, 200, 0.2);
-    /* Leggero grigio */
     transform: scale(1.1);
-    /* Leggera espansione */
 }
-
-
 
 .btn-check:checked+.btn {
     background-color: #007bff;
-    /* blu */
     border-color: #007bff;
 }
 
 .btn-check:checked:hover+.btn {
     background-color: #007bff;
-    /* blu */
     border-color: #007bff;
 }
 
 .btn-check:hover+.btn {
     background-color: #acd4ffea;
-    /* blu scuro */
     border-color: #0057b3ea;
-    /* blu scuro */
 }
-
-
 
 .card-profile {
     border-radius: 10px;
-    /* Angoli arrotondati */
-
 }
 
 .table {
     border-top-left-radius: 10px;
-    /* Arrotonda l'angolo superiore sinistro */
     border-top-right-radius: 10px;
     overflow: hidden;
-    /* Nasconde gli angoli arrotondati */
 }
 
 thead.table-dark th.pers-th {
     color: #b1b1b1;
-
 }
 
 .no-link {
     text-decoration: none;
-    /* Rimuove la sottolineatura */
 }
 
 .index-mainPoints {
     font-style: italic;
     color: #00000073;
-    /* Colore del testo */
     font-size: 0.9em;
-    /* Dimensione del testo */
 }
 
 .index-titles {
@@ -179,11 +142,8 @@ thead.table-dark th.pers-th {
     align-items: center;
     color: #333;
     max-width: 170px;
-    /* Limita la larghezza massima */
     width: auto;
-    /* Consente di adattarsi al contenuto */
     margin: 0 auto;
-    /* Centra l'elemento orizzontalmente */
 }
 
 .date-display i {
@@ -203,7 +163,6 @@ thead.table-dark th.pers-th {
     color: #ffffff !important;
 }
 
-
 .nav-link_auth.active {
     color: inherit !important;
 }
@@ -214,13 +173,11 @@ thead.table-dark th.pers-th {
 
 .custom-input-form {
     background-color: #d7eaff;
-
 }
 
 .play {
     background-color: rgb(141, 196, 255) !important;
 }
-
 
 .status {
     background-color: rgb(187, 192, 199) !important;
@@ -244,21 +201,18 @@ thead.table-dark th.pers-th {
 
 .btn-fix-ended {
     background-color: #28a745;
-    /* blu */
     border-color: #0057b3ea;
     color: #ffffff;
 }
 
 .btn-fix-progress {
     background-color: #ff7700;
-    /* blu */
     border-color: #0057b3ea;
     color: #ffffff;
 }
 
 .btn-fix-deleted {
     background-color: #ff0000;
-    /* blu */
     border-color: #0057b3ea;
     color: #ffffff;
 }
@@ -318,18 +272,12 @@ thead.table-dark th.pers-th {
 
 .error-input::placeholder {
     color: #dc3545 !important;
-    /* Dimensione del testo */
-    /* Corsivo */
 }
 
 .error-input-val {
     color: #dc3545 !important;
-    /* Dimensione del testo */
-    /* Corsivo */
 }
 
-
-/* bottone conferma */
 @keyframes vibrate {
     0% {
         transform: translateX(0);

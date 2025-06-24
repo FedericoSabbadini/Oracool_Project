@@ -1,4 +1,5 @@
 <?php
+// This file contains the data for football clubs, teams, countries, competitions, cities, and stadiums.
 
 return [
 

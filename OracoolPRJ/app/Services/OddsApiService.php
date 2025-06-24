@@ -5,13 +5,15 @@ namespace App\Services;
 use App\Models\EventFootball;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Event;
+use Carbon\Carbon;
 
+/**
+ * OddsApiService interacts with the Odds API to fetch and update football event odds.
+ * It provides methods to retrieve odds for specific leagues and update events in the database.
+ */
 class OddsApiService
 {
-    //protected $apiKey = 'f0e597500ec08145bb2212147b7a81b7';
-    protected $apiKey = '32e3a7b42b51a4b4c0f749690e5d51aa';
-    protected $baseUrl = 'https://api.the-odds-api.com/v4/sports';
-
     /**
      * Recupera le quote per gli eventi di calcio
      *
@@ -21,8 +23,16 @@ class OddsApiService
     public function getFootballOdds($league)
     {
         try {
-            $response = Http::get($this->baseUrl . '/' . $league . '/odds', [
-                'api_key' => $this->apiKey,
+            $baseUrl = env('FOOTBALL_API_BASE_URL');
+            $apiKey = env('FOOTBALL_API_KEY');
+
+            if (!$baseUrl || !$apiKey) {
+                Log::error('Base URL or API key not set in environment variables');
+                return [];
+            }
+
+            $response = Http::get($baseUrl . '/' . $league . '/odds', [
+                'api_key' => $apiKey,
                 'regions' => 'eu',
                 'markets' => 'h2h,spreads,totals',
                 'dateFormat' => 'iso'
@@ -41,10 +51,10 @@ class OddsApiService
     }
 
     /**
-     * Aggiorna le quote per gli eventi esistenti
+     * Aggiorna le quote degli eventi di calcio nel database
      *
      * @param string $league
-     * @return array Informazioni sull'aggiornamento
+     * @return array
      */
     public function updateEventsOdds($league)
     {
@@ -53,10 +63,6 @@ class OddsApiService
         $updatedCount = 0;
         $matchedByTeams = 0;
         $foundApiEvents = count($apiData);
-            foreach ($apiData as $match) {
-        // Stampa solo home e away team
-        Log::info("Partita: {$match['home_team']} vs {$match['away_team']}");
-    }
 
         Log::info('Eventi trovati dall\'API: ' . $foundApiEvents);
 
@@ -77,7 +83,6 @@ class OddsApiService
             $homeTeam = $event->home_team;
             $awayTeam = $event->away_team;
                         
-            // Cerca questo evento nei dati dell'API
             $matchingApiEvent = collect($apiData)->first(function($apiEvent) use ($homeTeam, $awayTeam) {
             return $apiEvent['home_team'] === $homeTeam && $apiEvent['away_team'] === $awayTeam;
             });
@@ -86,7 +91,6 @@ class OddsApiService
             $matchedByTeams++;
             $odds = $this->calculateAverageOdds($matchingApiEvent, $homeTeam, $awayTeam);
             
-            // Aggiorna le quote nel database
             $event->quote_1 = $odds['quote1'];
             $event->quote_X = $odds['quoteX'];
             $event->quote_2 = $odds['quote2'];
@@ -147,7 +151,6 @@ class OddsApiService
             }
         }
 
-        // Calcola la media delle quote solo se ci sono quote per l'esito
         $avgQuote1 = $count1 > 0 ? $quote1 / $count1 : 0;
         $avgQuoteX = $countX > 0 ? $quoteX / $countX : 0;
         $avgQuote2 = $count2 > 0 ? $quote2 / $count2 : 0;
@@ -158,6 +161,106 @@ class OddsApiService
             'quote2' => $avgQuote2,
         ];
     }
-    
 
+    /**
+     * Aggiunge gli eventi di oggi per una lega specifica
+     *
+     * @param string $league
+     * @return array
+     */
+    public function addTodayEvents($league)
+    {
+        Log::info('Inizio aggiunta eventi di oggi per la lega: ' . $league);
+        $apiData = $this->getFootballOdds($league);
+        $addedCount = 0;
+        
+
+        if (empty($apiData)) {
+            Log::error('Nessun dato ricevuto dall\'API');
+            return [
+                'added' => 0,
+                'api_events' => 0,
+                'error' => 'Nessun dato ricevuto dall\'API'
+            ];
+        }
+        $foundApiEvents = count($apiData);
+
+
+        foreach ($apiData as $eventData) {
+            $dateOdds = $eventData['commence_time'];
+                $utcDate = Carbon::parse($dateOdds)->setTimezone('UTC');
+            $dateOddsRome = $utcDate->setTimezone('Europe/Rome');
+
+            if ($dateOdds > now() &&  $dateOdds < now()->addDay()) {
+                $event = EventFootball::where('home_team', $eventData['home_team'])
+                ->where('away_team', $eventData['away_team'])
+                ->where('status', 'scheduled')
+                ->first();
+
+                if (!$event) {
+                    $ev = new Event();
+                    $ev->type = 'football';
+                    $ev->start_time = $dateOddsRome;
+                    $ev->status = 'scheduled';
+                    $ev->save();
+
+                    switch ($league) {
+                        case 'soccer_epl':
+                            $competition = 'Premier League';
+                            $country = 'England';
+                            break; 
+                        case 'soccer_serie_a':
+                            $competition = 'Serie A';
+                            $country = 'Italy';
+                            break;
+                        case 'soccer_bundesliga':
+                            $competition = 'Bundesliga';
+                            $country = 'Germany';
+                            break;
+                        case 'soccer_laliga':
+                            $competition = 'La Liga';
+                            $country = 'Spain';
+                            break;
+                        case 'soccer_ligue_1':
+                            $competition = 'Ligue 1';
+                            $country = 'France';
+                            break;
+                        case 'soccer_fifa_club_world_cup':
+                            $competition = 'FIFA Club World Cup';
+                            $country = 'USA';
+                            break;
+                        default:
+                            $competition = '';
+                            $country = '';
+                        }
+
+                    $event = EventFootball::create(
+                        [
+                            'id' => $ev->id,
+                            'home_team' => $eventData['home_team'],
+                            'away_team' => $eventData['away_team'],
+                            'start_time' => $ev->start_time,
+                            'competition' => $competition,
+                            'home_score' => 0,
+                            'away_score' => 0,
+                            'stadium' => '',
+                            'country' =>  $country,
+                            'city' =>  '',
+                            'season' => '24/25',
+                            'status' => $ev->status,
+                            'quote_1' => 1.01,
+                            'quote_X' => 1.01,
+                            'quote_2' => 1.01,
+                        ]
+                    );
+                }
+                $addedCount++;
+            }
+        }
+
+        return [
+            'added' => $addedCount,
+            'api_events' => $foundApiEvents,
+        ];
+    }
 }

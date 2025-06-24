@@ -1,4 +1,4 @@
-
+// Funzione per impostare il fuso orario dell'utente
 function setTimezone() {
 
     // Ottiene il fuso orario dell'utente
@@ -8,7 +8,7 @@ function setTimezone() {
         url: '/set-timezone',
         type: 'POST',
         data: {
-            _token: $('meta[name="csrf-token"]').attr('content'), // Add CSRF token here
+            _token: $('meta[name="csrf-token"]').attr('content'),
             timezone: userTimezone
         },
         success: function (response) {

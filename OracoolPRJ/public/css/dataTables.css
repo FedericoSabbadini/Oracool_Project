@@ -1,37 +1,26 @@
-       /* Stili per DataTables minimale */
+/* Stili per DataTables */
 
-       .dataTables_wrapper .dataTables_filter input {
-           margin-left: 0;
-           width: 100%;
-           display: inline-block;
-       }
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0;
+    width: 100%;
+    display: inline-block;
+}
 
-       /* Nascondi testo "Show X entries" */
-       .dataTables_length,
-       .dataTables_info {
-           display: none;
-       }
+.dataTables_length,
+.dataTables_info {
+    display: none;
+}
 
+.dataTables_filter label {
+    margin: 0;
+    width: 100%;
+}
 
+.custom-pagination {
+    display: flex;
+    justify-content: flex-end;
+}
 
-       /* Rimuovi il margin dal campo di ricerca per allinearlo meglio */
-       .dataTables_filter label {
-           margin: 0;
-           width: 100%;
-       }
-
-       .custom-pagination {
-
-           display: flex;
-           justify-content: flex-end;
-           /* Allinea la paginazione al centro (o usa flex-end per destra) */
-       }
-
-
-
-       .custom-pagination .pagination li a {
-
-           /* Riduci il padding dei pulsanti */
-           font-size: 0.9rem;
-           /* Riduci la dimensione del font dei link */
-       }
+.custom-pagination .pagination li a {
+    font-size: 0.9rem;
+}

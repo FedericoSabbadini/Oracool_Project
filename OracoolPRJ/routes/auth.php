@@ -30,6 +30,9 @@ Route::middleware('guest')->group(function () {
     Route::get('/checkEmail', [AuthenticatedSessionController::class, 'checkEmail'])
         ->name('login.checkEmail');
 
+    Route::get('/checkKey', [AuthenticatedSessionController::class, 'checkKey'])
+        ->name('login.checkKey');
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 

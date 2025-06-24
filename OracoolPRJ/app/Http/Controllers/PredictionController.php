@@ -5,14 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DataLayer;
 
-
+/**
+ * PredictionController handles the creation and storage of predictions for football events.
+ * It retrieves today's football events and allows users to make predictions.
+ */
 class PredictionController extends Controller
 {
+    /**
+     * Display the prediction creation form with today's football events.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         $dl = new DataLayer();
         $eventsFootball = $dl->getTodayEventsFootballPredictions();
-
 
         $pred=0;
         foreach ($eventsFootball as $eventFootball) {
@@ -32,6 +39,12 @@ class PredictionController extends Controller
         }
     }
 
+    /**
+     * Store predictions for today's football events.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
 

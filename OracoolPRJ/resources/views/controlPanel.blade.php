@@ -1,6 +1,7 @@
 @extends('layouts.primary')
 
 @section('head', __('controlPanel.page_title'))
+
 @section('controlPanel-active', 'active')
 
 @section('body-hero')
@@ -20,7 +21,7 @@
   <p class="lead mt-3 px-4">{{ __('controlPanel.subheader') }}</p>
   <div class="date-display align-items-center justify-content-center mt-2">
     <i class="fas fa-calendar-day me-2"></i>
-    <span>{{ now()->format(__('controlPanel.date_format')) }}</span>
+    <span>{{ \Carbon\Carbon::now()->translatedFormat('d M') }}</span>
   </div>
 @endsection
 

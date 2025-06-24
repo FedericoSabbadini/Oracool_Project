@@ -7,8 +7,14 @@ use Illuminate\Database\Seeder;
 use App\Models\Event;
 use App\Models\EventFootball;
 
+/**
+ * Class EventSeeder
+ *
+ * Seeder for populating the events table with football events.
+ */
 class EventSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      */
@@ -17,6 +23,11 @@ class EventSeeder extends Seeder
         $this->runEventFootball();
     }
 
+    /**
+     * Run the football events seeder.
+     *
+     * This method creates several football events with their details.
+     */
     private function runEventFootball(): void
     {
 
@@ -210,6 +221,5 @@ class EventSeeder extends Seeder
             'quote_X' => 3.5,
             'quote_1' => 4.2,
         ]);
-
-        }
     }
+}

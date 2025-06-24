@@ -7,6 +7,7 @@ return [
     'login_required' => 'Devi essere autenticato per accedere',
     'admin_required' => 'Devi essere admin per accedere',
     'session-expired' => 'La tua sessione è scaduta, sessioni multiple rilevate.',
+    'event-not-found' => 'Evento non trovato',
 
 
     //success
@@ -16,5 +17,6 @@ return [
     'prediction-edited-successfully' => 'Match modificato con successo',
     'prediction-added-successfully' => 'Match creato con successo',
     'prediction-registered-successfully' => 'Pronostico registrato con successo',
+    'event-already-exists' => 'L\'evento esiste già',
 
 ];
