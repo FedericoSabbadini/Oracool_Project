@@ -40,10 +40,7 @@ class PredictionStatus
         foreach ($eventsFootball as $eventFootball) {
             $eventFootball->status = Event::where('id', $eventFootball->id)->value('status');
 
-            if ($eventFootball->status === 'in_progress') {
-                $eventFootball->home_score = 0;
-                $eventFootball->away_score = 0;
-            } else if ($eventFootball->status === 'scheduled') {
+            if ($eventFootball->status === 'scheduled') {
                 $eventFootball->home_score = null;
                 $eventFootball->away_score = null;
             } 

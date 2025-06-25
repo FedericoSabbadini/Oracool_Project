@@ -91,11 +91,14 @@
 
                         $(this).text("{{ __('master.confirm_log_out') }}");
                         $(this).css({'color': '#ff0000', 'font-weight': '600'}); 
-                        // Reset after 5 seconds if user doesn't click again
+                        $('#isAdmin-li').show();
+
+                        // Imposta un timeout per ripristinare il testo e lo stile dopo 5 secondi
                         setTimeout(function() {
                             clickedOnce = false;
                             $('#logout-action').css({'color': '', 'font-weight': ''}); 
                             $('#logout-action').text("{{ __('master.log_out') }}");
+                            $('#isAdmin-li').hide();
                         }, 5000);
                     } else {
                           $('#logout-form').submit();
@@ -135,7 +138,7 @@
                                 <li class="nav-item"><a class="nav-link disabled @yield('predictionEdit-active')" >{{ __('master.edit') }}</a></li>
                                 <li class="nav-item  pe-4"><a class="nav-link disabled @yield('predictionClose-active')" >{{ __('master.close') }}</a></li>
 
-                                <li class="nav-item"><a id="isAdmin-action" class="nav-link text-warning" href="#">{{ __('master.change_logU') }}</a>
+                                <li class="nav-item" style="display:none;" id="isAdmin-li"><a id="isAdmin-action" class="nav-link text-warning" href="#">{{ __('master.change_logU') }}</a>
                                     <form id="isAdmin-form" action="{{ route('userProfile.index') }}" method="GET" style="display: none;">
                                         @csrf
                                         <input type="hidden" name="isAdmin" value="0">
@@ -155,7 +158,7 @@
                                 <li class="nav-item pe-4"><a class="nav-link @yield('userProfile-active')" href="{{ route('userProfile.index') }}">{{ __('master.profile') }}</a></li>
                                 
                                 @if (Auth::user()->adminKey != null)
-                                    <li class="nav-item"><a id="isAdmin-action" class="nav-link text-warning" href="#">{{ __('master.change_logA') }}</a>
+                                    <li class="nav-item" style="display:none;" id="isAdmin-li"><a id="isAdmin-action" class="nav-link text-warning" href="#">{{ __('master.change_logA') }}</a>
                                         <form id="isAdmin-form" action="{{ route('home.index') }}" method="GET" style="display: none;">
                                             @csrf
                                             <input type="hidden" name="isAdmin" value="1">

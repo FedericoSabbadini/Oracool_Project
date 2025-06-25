@@ -241,6 +241,7 @@ class DataLayer extends Model
 
         if (!empty($updateData)) {
             $eventFootball->update($updateData);
+            
         }
         if ($request->has('start_time') && $request->input('start_time') !== null) {
             Event::find($id)->update([

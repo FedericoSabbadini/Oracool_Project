@@ -191,7 +191,7 @@ class OddsApiService
                 $utcDate = Carbon::parse($dateOdds)->setTimezone('UTC');
             $dateOddsRome = $utcDate->setTimezone('Europe/Rome');
 
-            if ($dateOdds > now()&& $dateOdds < now()->copy()->addHours(48) ) {
+            if ($dateOddsRome > now() && $dateOddsRome < now()->copy()->addHours(24) ) {
                 Log::info('Aggiunta evento: ' . $eventData['home_team'] . ' vs ' . $eventData['away_team'] . ' alle ' . $dateOddsRome);
                 $event = EventFootball::where('home_team', $eventData['home_team'])
                 ->where('away_team', $eventData['away_team'])

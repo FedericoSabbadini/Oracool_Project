@@ -120,7 +120,7 @@
       <div class="col-12 text-center mt-4">
         @php 
           $disabled = '';
-          if(isset($error))
+          if(isset($error) && Auth::check()) 
             $disabled='disabled'
         @endphp
         <button type="submit" class="btn btn-primary btn-lg px-4 mt-3" {{ $disabled }}>
