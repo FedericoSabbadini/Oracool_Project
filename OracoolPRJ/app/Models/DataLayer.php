@@ -265,4 +265,42 @@ class DataLayer extends Model
             ->where('status', 'scheduled')
             ->exists();
     }
+
+    /**
+     * Get a football event by its ID.
+     *
+     * @param int $id The ID of the event.
+     * @return EventFootball
+     */
+    public function getEventFootballById($id)
+    {
+        return EventFootball::findOrFail($id);
+    }
+
+    /**
+     * Get football events that are scheduled for today.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getEventFootballEditing  (){
+        $eventsFootball = EventFootball::where('status', '!=', 'ended')
+            ->where('status', '!=', 'deleted')
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return $eventsFootball;
+    }
+
+    /**
+     * Get football events that are currently in progress.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getEventFootballClosing  (){
+        $eventsFootball = EventFootball::where('status', 'in_progress')
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return $eventsFootball;
+    }
 }

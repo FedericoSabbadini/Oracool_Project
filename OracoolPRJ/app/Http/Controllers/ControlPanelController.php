@@ -30,7 +30,8 @@ class ControlPanelController extends Controller
      */
     public function createEdit()
     {
-        $eventsFootball = EventFootball::where('status','!=', 'ended')->where('status','!=', 'deleted')->get();
+        $dl = new DataLayer();
+        $eventsFootball = $dl->getEventFootballEditing();
 
         if($eventsFootball->isEmpty()){
             return redirect()->route('controlPanel.index')->with('error', 'No events available for editing.');
@@ -46,7 +47,8 @@ class ControlPanelController extends Controller
      */
     public function createClose()
     {
-        $eventsFootball = EventFootball::where('status', 'in_progress')->get();
+        $dl = new DataLayer();
+        $eventsFootball = $dl->getEventFootballClosing();
 
         if($eventsFootball->isEmpty()){
             return redirect()->route('controlPanel.index')->with('error', 'No events available for closing.');

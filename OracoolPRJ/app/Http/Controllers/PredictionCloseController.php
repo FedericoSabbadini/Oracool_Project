@@ -22,13 +22,8 @@ class PredictionCloseController extends Controller
      */
     public function show($id)
     {
-        $event = Event::findOrFail($id);
-
-        if ($event->type == 'football') {
-            $eventFootball = EventFootball::where('id', $id)->first();
-        } else {
-            throw new \Exception("Invalid event type");
-        }
+        $dl = new DataLayer();
+        $eventFootball = $dl->getEventFootballById($id);
 
         return view('predictionClose', ['eventFootball' => $eventFootball]);
     }

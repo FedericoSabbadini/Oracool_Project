@@ -36,7 +36,7 @@
             orderable: false,
             targets: [3]                // Disabilita ordinamento su colonne 1 e 3   
             }],
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
         });
     </script>
 
