@@ -5,17 +5,29 @@
 @section('prediction-active', 'active')
 
 @section('body-hero')
-    @if(session('success'))
-        <script>
-            toastr.success("{{ session('success') }}");
-        </script>
-    @endif
+  @if(session('success'))
+      <script>
+          toastr.success("{{ session('success') }}");
+      </script>
+  @endif
 
-    @if(session('error'))
-        <script>
-            toastr.error("{{ session('error') }}");
-        </script>
-    @endif
+  @if(session('error'))
+      <script>
+          toastr.error("{{ session('error') }}");
+      </script>
+  @endif
+
+  <script>
+      $(document).ready(function () {
+          $('.reset-btn').click(function (event) {
+              event.preventDefault();
+              var footballId = $(this).data('target');
+              $('input[name="' + footballId + '"]').prop('checked', false);
+          });
+      });
+  </script>
+
+
     
   <h1 class="display-4 fw-bold">{{ __('prediction.heading') }}</h1>
   <p class="lead mt-3 mx-3">{{ __('prediction.subheading') }}</p>
@@ -91,7 +103,7 @@
               }
             @endphp
 
-            <div class="btn-group" role="group">
+            <div class="btn-group" role="group" data-football-id="{{ $footballId }}">
               @if( (!Auth::check()) || ($eventFootball->status != __('prediction.status_scheduled')))
                 <input type="radio" class="btn-check" name="{{$footballId}}" id="{{$footballId}}-1" value="{{ __('prediction.button_home_win') }}" disabled>
                 <label class="btn btn-outline-primary {{$result=='1' ? $btnStatus : ''}} 
@@ -109,6 +121,11 @@
                 <label class="btn btn-outline-primary {{$prediction=='X' ? $btnPrediction : ''}}" for="{{$footballId}}-X">{{ __('prediction.button_draw') }}</label>
                 <input type="radio" class="btn-check" name="{{$footballId}}" id="{{$footballId}}-2" value="{{ __('prediction.button_away_win') }}">
                 <label class="btn btn-outline-primary {{$prediction=='2' ? $btnPrediction: ''}}" for="{{$footballId}}-2">{{ __('prediction.button_away_win') }}</label>
+                @if ($prediction == 'null')
+                  <button type="reset" class="btn btn-outline-secondary btn-sm ms-2 reset-btn" data-target="{{ $footballId }}">
+                    <i class="fas fa-undo"></i>
+                  </button>
+                @endif
               @endif
             </div>
             <p class="pt-2 mb-0 {{$testStatus}}">{{$eventFootball->status}}</p>
@@ -117,11 +134,11 @@
       </div>
       @endforeach
 
-      <div class="col-12 text-center mt-4">
+      <div class="col-12 text-center mt-4"">
         @php 
           $disabled = '';
           if(isset($error) && Auth::check()) 
-            $disabled='disabled'
+            $disabled='disabled';
         @endphp
         <button type="submit" class="btn btn-primary btn-lg px-4 mt-3" {{ $disabled }}>
           @if(Auth::check())
@@ -130,6 +147,11 @@
             {{ __('prediction.submit_guest') }}
           @endif
         </button>
+        @if (Auth::check() && !isset($error))
+          <button type="reset" class="btn btn-outline-secondary ms-2 btn-lg px-2 mt-3 ">
+            <i class="fas fa-undo"></i>
+          </button>
+        @endif
       </div>
     </div>
   </form>
