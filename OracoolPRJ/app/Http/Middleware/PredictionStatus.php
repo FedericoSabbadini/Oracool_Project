@@ -43,7 +43,12 @@ class PredictionStatus
             if ($eventFootball->status === 'scheduled') {
                 $eventFootball->home_score = null;
                 $eventFootball->away_score = null;
-            } 
+            } elseif ($eventFootball->status === 'in_progress') {
+                if ($eventFootball->home_score === null || $eventFootball->away_score === null) {
+                    $eventFootball->home_score = 0;
+                    $eventFootball->away_score = 0;
+                }
+            }
             $eventFootball->save();
         }
 

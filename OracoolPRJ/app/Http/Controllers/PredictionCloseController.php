@@ -50,6 +50,6 @@ class PredictionCloseController extends Controller
             default:
                 throw new \Exception("Invalid event type");
         }
-        return redirect()->route('controlPanel.index')->with('success', __('error.prediction-closed-successfully'));
+        return redirect()->route('controlPanel.createClose')->with('success', __('error.prediction-closed-successfully'));
     }
 }
