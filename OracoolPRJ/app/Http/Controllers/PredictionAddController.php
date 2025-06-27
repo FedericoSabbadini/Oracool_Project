@@ -29,7 +29,10 @@ class PredictionAddController extends Controller
         'cities' => $clubData['cities'],
         'stadiums' => $clubData['stadiums'],
         'competitions' => $clubData['competitions'],
-    ]);;
+
+        'stadiums_cwc' => $clubData['club_world_cup_usa_stadiums'],
+        'cities_cwc' => $clubData['club_world_cup_usa_cities'],
+        ]);;
     }
 
     /**

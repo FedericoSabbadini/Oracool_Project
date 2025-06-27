@@ -99,6 +99,27 @@
                     $("input[name='start_time']").removeClass("error-input-val");
                 }
             })
+
+
+            const stadiumsCWC = @json($stadiums_cwc);
+            const citiesCWC = @json($cities_cwc);
+            // Function to enable stadium autocomplete for FIFA Club World Cup
+            function enableStadiumAutocompleteForCWC() {
+                $('#stadium').autocomplete({
+                    source: stadiumsCWC,
+                    minLength: 2,
+                    select: function (event, ui) {
+                        const selectedStadium = ui.item.value;
+                        const city = citiesCWC[selectedStadium];
+                        if (city) {
+                            $('#city').val(city);
+                        }
+                    }
+                });
+            }
+            if ($('#competition').val() == 'FIFA Club World Cup') {
+                enableStadiumAutocompleteForCWC();
+            }
         });
     </script>
 
@@ -123,7 +144,7 @@
                         
                         <div class="row">
                             <div class="col-8 mb-3">
-                                <input type="text" name="competition" class="form-control custom-input-form" placeholder="{{$eventFootball->competition}}" disabled/>
+                                <input type="text" name="competition" id="competition"class="form-control custom-input-form" value="{{ $eventFootball->competition }}" disabled/>
                             </div>
                             <div class="col-4 mb-3">
                                 <input type="text" name="season" class="form-control custom-input-form" placeholder="{{$eventFootball->season}}"  />
@@ -168,15 +189,15 @@
                         
 
                         <div class="mb-3">
-                            <input type="text" name="stadium" class="form-control custom-input-form" placeholder="{{$eventFootball->stadium}}"  />
+                            <input type="text" name="stadium" class="form-control custom-input-form" id="stadium" placeholder="{{$eventFootball->stadium}}"  />
                         </div>
                         <div class="row">
 
                             <div class="col-6 mb-3">
-                                <input type="text" name="city" class="form-control custom-input-form" placeholder="{{$eventFootball->city}}"  />
+                                <input type="text" name="city" class="form-control custom-input-form" id="city" placeholder="{{$eventFootball->city}}"  />
                             </div>
                             <div class="col-6 mb-3">
-                                <input type="text" name="country" class="form-control custom-input-form" placeholder="{{$eventFootball->country}}"  />
+                                <input type="text" name="country" autocomplete="off" class="form-control custom-input-form" placeholder="{{$eventFootball->country}}"  />
                             </div>
                         </div>
 

@@ -54,5 +54,37 @@ return [
         'Alavés'=> 'Mendizorrotza Stadium', 'Athletic Bilbao'=> 'San Mamés Stadium', 'Atlético Madrid'=> 'Metropolitano Stadium', 'Barcelona'=> 'Camp Nou', 'CA Osasuna'=> 'El Sadar Stadium', 'Celta Vigo'=> 'Abanca-Balaídos', 'Espanyol'=> 'RCDE Stadium', 'Getafe'=> 'Coliseum Alfonso Pérez', 'Girona'=> 'Montilivi Stadium', 'Las Palmas'=> 'Estadio de Gran Canaria', 'Leganés'=> 'Estadio Municipal Butarque', 'Mallorca'=> 'Son Moix Stadium', 'Rayo Vallecano'=> 'Campo de Fútbol de Vallecas', 'Real Betis'=> 'Benito Villamarín Stadium', 'Real Madrid'=> 'Santiago Bernabéu Stadium', 'Real Sociedad'=> 'Reale Arena', 'Sevilla'=> 'Ramón Sánchez Pizjuán Stadium', 'Valencia'=> 'Mestalla Stadium', 'Valladolid'=> 'José Zorrilla Stadium', 'Villarreal'=> 'Estadio de la Cerámica',
         // Ligue 1
         'Angers'=> 'Stade Raymond Kopa', 'AS Monaco'=> 'Stade Louis II', 'Auxerre'=> 'Stade Abbé-Deschamps', 'Brest'=> 'Stade Francis-Le Blé', 'Le Havre'=> 'Stade Océane', 'RC Lens'=> 'Stade Bollaert-Delelis', 'Lille'=> 'Stade Pierre-Mauroy', 'Lyon'=> 'Groupama Stadium', 'Marseille'=> 'Orange Vélodrome', 'Montpellier'=> 'Stade de la Mosson', 'Nantes'=> 'Stade de la Beaujoire', 'Nice'=> 'Allianz Riviera', 'Paris Saint Germain'=> 'Parc des Princes', 'Rennes'=> 'Roazhon Park', 'Saint Etienne'=> 'Stade Geoffroy-Guichard', 'Stade de Reims'=> 'Stade Auguste-Delaune', 'Strasbourg'=> 'Stade de la Meinau', 'Toulouse'=> 'Stadium de Toulouse',
-        ]
+    ],
+
+
+    // FIFA Club World Cup USA Cities and Stadiums
+    // The cities and stadiums are based on the venues selected for the 2025 FIFA
+    'club_world_cup_usa_cities' => [
+        'Lincoln Financial Field' => 'Philadelphia',
+        'MetLife Stadium' => 'New York City',
+        'Rose Bowl' => 'Los Angeles',
+        'Hard Rock Stadium' => 'Miami',
+        'Lumen Field' => 'Seattle',
+        'Mercedes-Benz Stadium' => 'Atlanta',
+        'Audi Field' => 'Washington D.C.',
+        'Camping World Stadium' => 'Orlando',
+        'Inter&Co Stadium' => 'Orlando',
+        'Bank of America Stadium' => 'Charlotte',
+        'TQL Stadium' => 'Cincinnati',
+        'GEODIS Park' => 'Nashville',
+    ],
+    'club_world_cup_usa_stadiums' => [
+        'Lincoln Financial Field',
+        'MetLife Stadium',
+        'Rose Bowl',
+        'Hard Rock Stadium',
+        'Lumen Field',
+        'Mercedes-Benz Stadium',
+        'Audi Field',
+        'Camping World Stadium',
+        'Inter&Co Stadium',
+        'Bank of America Stadium',
+        'TQL Stadium',
+        'GEODIS Park'
+    ]
 ];

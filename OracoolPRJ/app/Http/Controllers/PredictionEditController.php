@@ -26,8 +26,13 @@ class PredictionEditController extends Controller
     {
         $dl = new DataLayer();
         $eventFootball = $dl->getEventFootballById($id);
+        $clubData = include resource_path('data/clubData.php');
 
-        return view('predictionEdit', ['eventFootball' => $eventFootball]);
+        return view('predictionEdit', [
+        'eventFootball' => $eventFootball,         
+        'stadiums_cwc' => $clubData['club_world_cup_usa_stadiums'],
+        'cities_cwc' => $clubData['club_world_cup_usa_cities'],
+    ]);
     }
 
     /**

@@ -159,6 +159,8 @@
         const cities = @json($cities);
         const stadium = @json($stadiums);
         const competitions = @json($competitions);
+        const stadiumsCWC = @json($stadiums_cwc);
+        const citiesCWC = @json($cities_cwc);
         
 
         // Initialize autocomplete for home_team and away_team
@@ -168,39 +170,73 @@
 
             $('#home_team').autocomplete({
                 source: availableTeams,
-                minLength: 2,  
+                minLength: 2,
+                select: function (event, ui) {
+                    const selectedHomeTeam = ui.item.value;
+                    const awayTeamOptions = availableTeams.filter(team => team !== selectedHomeTeam);
+
+                    $('#away_team').autocomplete({
+                        source: awayTeamOptions,
+                        minLength: 2
+                    });
+
+                    updateHome();
+                }
             });
-            $('#away_team').autocomplete({
-                source: availableTeams,
-                minLength: 2, 
-            });
-        
+
             const country = countries[selectedCompetition];
             if (country) {
                 $('#country').val(country); 
             }
-
         }
 
         // Update the home team city and stadium based on the selected home team
         function updateHome() {
             const selectedCompetition = $('#competition').val();
+            const home = $("input[name='home_team']").val();
 
-            if (selectedCompetition != 'FIFA Club World Cup') {
-                const city= cities[$("input[name='home_team']").val()];
+            if (selectedCompetition !== 'FIFA Club World Cup') {
+                const city = cities[home];
                 if (city) {
                     $('#city').val(city);  
                 }
-                const stadiumName = stadium[$("input[name='home_team']").val()];
+
+                const stadiumName = stadium[home];
                 if (stadiumName) {
                     $('#stadium').val(stadiumName); 
                 }
+
             }
         }
-        
-        $('#competition').on('change', updateTeams);
+
+        function enableStadiumAutocompleteForCWC() {
+            $('#stadium').autocomplete({
+                source: stadiumsCWC,
+                minLength: 2,
+                select: function (event, ui) {
+                    const selectedStadium = ui.item.value;
+                    const city = citiesCWC[selectedStadium];
+                    if (city) {
+                        $('#city').val(city);
+                    }
+                }
+            });
+        }
+
+        // Initialize autocomplete for away_team
+        $('#competition').on('change', function () {
+            updateTeams();
+            updateHome();
+
+            if ($(this).val() === 'FIFA Club World Cup') {
+                enableStadiumAutocompleteForCWC();
+            }
+        });
+        // Initialize autocomplete for home_team
         $('#home_team').on('change', updateHome);
+        // Initialize the autocomplete for the competition dropdown
         updateTeams();
+        updateHome();
     });
     </script>
 
