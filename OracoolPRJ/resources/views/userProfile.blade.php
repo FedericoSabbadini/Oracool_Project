@@ -76,10 +76,10 @@
                 <table class="table table-striped text-center align-middle table-hover table-bordered" id="dataTable">
                     <thead class="table-dark ">
                     <tr>
-                        <th class="pers-th col-2">{{ __('userProfile.history_date') }}</th>
-                        <th class="col-6">{{ __('userProfile.history_match') }}</th>
-                        <th class="pers-th d-none d-md-table-cell col-2" scope="col">{{ __('userProfile.history_prediction') }}</th>
-                        <th class="col-2">{{ __('userProfile.history_result') }}</th>
+                        <th class="col-2">{{ __('userProfile.history_date') }}</th>
+                        <th class="pers-th col-6">{{ __('userProfile.history_match') }}</th>
+                        <th class="d-none d-md-table-cell col-2" scope="col">{{ __('userProfile.history_prediction') }}</th>
+                        <th class="pers-th col-2">{{ __('userProfile.history_result') }}</th>
                     </tr>
                     </thead>
                     <tbody>

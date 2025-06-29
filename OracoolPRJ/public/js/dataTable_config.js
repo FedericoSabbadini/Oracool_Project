@@ -75,7 +75,7 @@ function applyCustomStyles(tableId) {
     // Disabilita la scrollbar orizzontale
     $('#' + tableId + '_wrapper').css('overflow-x', 'hidden');
 
-    // Aggiungi un cursore a tutte le intestazioni tranne la seconda colonna
+    // Aggiungi un cursore a tutte le intestazioni
     $('#' + tableId).css('cursor', 'pointer');
 }
 

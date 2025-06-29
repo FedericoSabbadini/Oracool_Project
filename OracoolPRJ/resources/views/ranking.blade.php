@@ -32,9 +32,9 @@
                             <th class="col-1" scope="col">{{ __('ranking.table_header_position') }}</th>
                             <th class="col-4" scope="col">{{ __('ranking.table_header_user') }}</th>
                             <th class="d-none d-md-table-cell col-1" scope="col">{{ __('ranking.table_header_points') }}</th>
-                            <th class="pers-th d-none d-md-table-cell col-2" scope="col">{{ __('ranking.table_header_predictions') }}</th>
+                            <th class="d-none d-md-table-cell col-2" scope="col">{{ __('ranking.table_header_predictions') }}</th>
                             <th class="col-2" scope="col">{{ __('ranking.table_header_accuracy') }}</th>
-                            <th class="pers-th d-none d-lg-table-cell col-2" scope="col">{{ __('ranking.table_header_update') }}</th>
+                            <th class=" d-none d-lg-table-cell col-2" scope="col">{{ __('ranking.table_header_update') }}</th>
 
                         </tr>
                     </thead>                            

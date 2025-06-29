@@ -34,9 +34,9 @@
             pagingType: "simple",       // Usa la paginazione semplice (precedente/successivo)
             columnDefs: [{
             orderable: false,
-            targets: [3]                // Disabilita ordinamento su colonne 1 e 3   
+            targets: [3, 1]                // Disabilita ordinamento su colonne 1 e 3   
             }],
-            order: [[0, 'asc']],
+            order: [[0, 'asc']],          // Ordina per la prima colonna (orario) in ordine ascendente
         });
     </script>
 
@@ -47,9 +47,9 @@
                     <thead class="table-dark ">
                         <tr>
                             <th class="col-2" scope="col">{{ __('predictionList.orario') }}</th>
-                            <th class="col-6" scope="col">{{ __('predictionList.match') }}</th>
-                            <th class="pers-th d-none d-md-table-cell col-2" scope="col">{{ __('predictionList.status') }}</th>
-                            <th class="col-2" scope="col">{{ __('predictionList.action') }}</th>
+                            <th class="pers-th col-6" scope="col">{{ __('predictionList.match') }}</th>
+                            <th class="d-none d-md-table-cell col-2" scope="col">{{ __('predictionList.status') }}</th>
+                            <th class="pers-th col-2" scope="col">{{ __('predictionList.action') }}</th>
                         </tr>
                     </thead>                            
 
@@ -57,6 +57,7 @@
                         @foreach ($eventsFootball as $eventFootball)
                             @php
                                 $date = \Carbon\Carbon::parse($eventFootball->start_time)->translatedFormat('d-m-y H:i');
+                                $dataOrder = \Carbon\Carbon::parse($eventFootball->start_time)->format('Y-m-d H:i');
                                 $homeTeam = $eventFootball->home_team;
                                 $awayTeam = $eventFootball->away_team;
                                 $status = $eventFootball->status;
@@ -69,7 +70,7 @@
                                 $buttonText = __('predictionList.' . $action); // Modifica o Chiudi
                             @endphp
                             <tr class="table-row">
-                                <td class=" text-secondary small">{{ $date }}</td>
+                                <td class=" text-secondary small" data-order="{{ $dataOrder }}">{{ $date }}</td>
                                 <td>{{ $homeTeam }} <span class="text-secondary small">vs</span> {{ $awayTeam }}</td>
                                 <td class="d-none d-md-table-cell">{{ $status }}</td>
                                 <td>
