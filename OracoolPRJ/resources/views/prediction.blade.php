@@ -44,7 +44,10 @@
     @csrf
     <div class="row g-5 justify-content-center">
 
-       @foreach ($eventsFootball as $eventFootball)
+      @php 
+        $totalPredictions = 0;
+      @endphp
+      @foreach ($eventsFootball as $eventFootball)
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
         <div class="card bg-light-secondary border-0 shadow-sm">
           <div class="card-body text-center px-4">
@@ -122,6 +125,7 @@
                 <input type="radio" class="btn-check" name="{{$footballId}}" id="{{$footballId}}-2" value="{{ __('prediction.button_away_win') }}">
                 <label class="btn btn-outline-primary {{$prediction=='2' ? $btnPrediction: ''}}" for="{{$footballId}}-2">{{ __('prediction.button_away_win') }}</label>
                 @if ($prediction == 'null')
+                  @php $totalPredictions++; @endphp
                   <button type="reset" class="btn btn-outline-secondary btn-sm ms-2 reset-btn" data-target="{{ $footballId }}">
                     <i class="fas fa-undo"></i>
                   </button>
@@ -147,7 +151,7 @@
             {{ __('prediction.submit_guest') }}
           @endif
         </button>
-        @if (Auth::check() && !isset($error))
+        @if (Auth::check() && !isset($error) && $totalPredictions > 1)
           <button type="reset" class="btn btn-outline-secondary ms-2 btn-lg px-2 mt-3 ">
             <i class="fas fa-undo"></i>
           </button>
