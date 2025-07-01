@@ -304,4 +304,66 @@ class DataLayer extends Model
 
         return $eventsFootball;
     }
+
+
+    
+    /**
+     * Add random predictions for each user on random football events.
+     */
+    public function addPredictions (){
+        foreach (User::all() as $user) {
+            if ($user->admin) 
+                continue;
+            $events = EventFootball::all();
+            $rand = rand(2,5);
+            for ($i = 0; $i < $rand; $i++) {
+                $event = $events->random();
+                $this->addRandomPredictions($event->id, $user->id);
+            }
+        }
+    }
+    /**
+     * Add random predictions for a specific event and user.
+     *
+     * @param int $eventId The ID of the event.
+     * @param int $userId The ID of the user.
+     */
+    private function addRandomPredictions($eventId, $userId)
+    {
+        $prediction = Prediction::updateOrCreate(
+            [
+                'event_id' => $eventId,
+                'user_id' => $userId,
+            ]
+        );
+
+        $randomResult = rand(0, 2);
+        $predicted_1 = $randomResult === 0;
+        $predicted_X = $randomResult === 1;
+        $predicted_2 = $randomResult === 2;
+
+        PredictionFootball::updateOrCreate(
+            ['id' => $prediction->id],
+            [
+                'predicted_1' => $predicted_1,
+                'predicted_X' => $predicted_X,
+                'predicted_2' => $predicted_2,
+            ]
+        );
+
+        $event= EventFootball::findOrFail($eventId);
+        if ($event->home_score>$event->away_score && $predicted_1) {
+            $prediction->value = true;
+            User::find($userId)->increment('points', $event->quote_1);
+        } elseif ($event->home_score<$event->away_score && $predicted_2) {
+            $prediction->value = true;
+            User::find($userId)->increment('points', $event->quote_2);
+        } elseif ($event->home_score==$event->away_score && $predicted_X) {
+            $prediction->value = true;
+            User::find($userId)->increment('points', $event->quote_X);
+        } else {
+            $prediction->value = false;
+        }
+        $prediction->save();
+    }
 }

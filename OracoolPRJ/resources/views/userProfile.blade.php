@@ -87,6 +87,7 @@
                             @php
                                 $event=$userEvents->where('id', $prediction->event_id)->first();
                                 $date= \Carbon\Carbon::parse($event->start_time)->translatedFormat('d-m-y');
+                                $dataOrder = \Carbon\Carbon::parse($event->start_time)->format('m-d-Y');
 
 
                                 if ($event->type == 'football') {
@@ -110,7 +111,7 @@
                                 }
                             @endphp
                             <tr>
-                                <td class=" text-secondary small">{{ $date }}</td>
+                                <td class=" text-secondary small" data-order="{{ $dataOrder }}">{{ $date }}</td>
                                 <td>{{ $homeTeam }} <span class="text-secondary small">vs</span> {{ $awayTeam }}</td>
                                 <td class="d-none d-md-table-cell"><strong>{{ $result }}</strong></td>
                                 <td><span class="badge {{ $prediction->value=='1' ? 'bg-success' 
