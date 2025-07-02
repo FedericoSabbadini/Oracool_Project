@@ -1,0 +1,26 @@
+/* Stili per DataTables */
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0;
+    width: 100%;
+    display: inline-block;
+}
+
+.dataTables_length,
+.dataTables_info {
+    display: none;
+}
+
+.dataTables_filter label {
+    margin: 0;
+    width: 100%;
+}
+
+.custom-pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.custom-pagination .pagination li a {
+    font-size: 0.9rem;
+}

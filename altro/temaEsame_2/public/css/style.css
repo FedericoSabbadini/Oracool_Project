@@ -1,0 +1,361 @@
+body {
+    background-color: #212529;
+    overflow-x: hidden;
+}
+
+.bg-gradient-secondary {
+
+    background: linear-gradient(to bottom, #0a81ff 40%, #ffffff);
+    /* blu */
+    padding: 10px;
+    /* Aggiunge un po' di spazio interno */
+    flex: 1;
+}
+
+.separator {
+    height: 56px;
+}
+
+
+footer {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-fluid {
+    min-height: calc(100vh - 56px - 55px);
+    /*nav56 e footer55*/
+
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+.bg-light {
+    flex: 1;
+    background-color: #e5f1ff !important;
+
+
+}
+
+.bg-light-secondary {
+    background-color: #ffffff !important;
+    /* Colore di sfondo */
+    color: #212529;
+    /* Colore del testo */
+
+}
+
+.not-last {
+    margin-bottom: 20px;
+    /* Aggiunge spazio tra le colonne */
+}
+
+small.footer {
+    font-size: 0.8em;
+    /* Dimensione del testo */
+    color: #fff9f9c5;
+    font-style: italic;
+    /* Corsivo */
+}
+
+
+
+/* Navbar Toggler */
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none;
+    /* Rimuove il contorno */
+    box-shadow: none;
+    /* Rimuove l'ombra */
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(200, 200, 200, 0.2);
+    /* Leggero grigio */
+    transform: scale(1.1);
+    /* Leggera espansione */
+}
+
+
+
+.btn-check:checked+.btn {
+    background-color: #007bff;
+    /* blu */
+    border-color: #007bff;
+}
+
+.btn-check:checked:hover+.btn {
+    background-color: #007bff;
+    /* blu */
+    border-color: #007bff;
+}
+
+.btn-check:hover+.btn {
+    background-color: #acd4ffea;
+    /* blu scuro */
+    border-color: #0057b3ea;
+    /* blu scuro */
+}
+
+
+
+.card-profile {
+    border-radius: 10px;
+    /* Angoli arrotondati */
+
+}
+
+.table {
+    border-top-left-radius: 10px;
+    /* Arrotonda l'angolo superiore sinistro */
+    border-top-right-radius: 10px;
+    overflow: hidden;
+    /* Nasconde gli angoli arrotondati */
+}
+
+thead.table-dark th.pers-th {
+    color: #b1b1b1;
+
+}
+
+.no-link {
+    text-decoration: none;
+    /* Rimuove la sottolineatura */
+}
+
+.index-mainPoints {
+    font-style: italic;
+    color: #00000073;
+    /* Colore del testo */
+    font-size: 0.9em;
+    /* Dimensione del testo */
+}
+
+.index-titles {
+    font-style: italic;
+    color: #212529;
+}
+
+.feature-card {
+    transition: all 0.3s ease;
+    border: 1px solid #e6e6e6;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.predict-icon {
+    color: #f4b400;
+}
+
+.handshake-icon {
+    color: #212529;
+}
+
+.personal-icon {
+    color: #6f42c1
+}
+
+.date-display {
+    background-color: #e5f1ff;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    color: #333;
+    max-width: 170px;
+    /* Limita la larghezza massima */
+    width: auto;
+    /* Consente di adattarsi al contenuto */
+    margin: 0 auto;
+    /* Centra l'elemento orizzontalmente */
+}
+
+.date-display i {
+    font-size: 1rem;
+    color: #007bff;
+}
+
+.date-display span {
+    font-size: 0.9rem;
+}
+
+.nav-link_auth {
+    color: #07204491 !important;
+}
+
+.nav-link_auth:hover {
+    color: #ffffff !important;
+}
+
+
+.nav-link_auth.active {
+    color: inherit !important;
+}
+
+.nav-link_auth:focus {
+    color: inherit !important;
+}
+
+.custom-input-form {
+    background-color: #d7eaff;
+
+}
+
+.play {
+    background-color: rgb(141, 196, 255) !important;
+}
+
+
+.status {
+    background-color: rgb(187, 192, 199) !important;
+}
+
+.text-status-deleted {
+    color: #ff0000;
+}
+
+.text-status-ended {
+    color: #28a745;
+}
+
+.text-status-progress {
+    color: #ff7700;
+}
+
+.text-status-scheduled {
+    color: #007bff;
+}
+
+.btn-fix-ended {
+    background-color: #28a745;
+    /* blu */
+    border-color: #0057b3ea;
+    color: #ffffff;
+}
+
+.btn-fix-progress {
+    background-color: #ff7700;
+    /* blu */
+    border-color: #0057b3ea;
+    color: #ffffff;
+}
+
+.btn-fix-deleted {
+    background-color: #ff0000;
+    /* blu */
+    border-color: #0057b3ea;
+    color: #ffffff;
+}
+
+.btn-fix-predict-scheduled {
+    background-image: repeating-linear-gradient(45deg,
+            #0057b3 0,
+            #0057b3 4px,
+            transparent 4px,
+            transparent 8px);
+    background-color: #acd4ffea;
+    border-color: #0057b3ea;
+    color: #ffffff;
+}
+
+.btn-fix-predict-ended {
+    background-image: repeating-linear-gradient(45deg,
+            #1e5f3f 0,
+            #1e5f3f 4px,
+            transparent 4px,
+            transparent 8px);
+    background-color: #74b884;
+    border-color: #0057b3ea;
+    color: #ffffff;
+}
+
+.btn-fix-predict {
+    background-image: repeating-linear-gradient(45deg,
+            #00000067 0,
+            #00000067 4px,
+            transparent 2px,
+            transparent 8px);
+    border-color: #0057b3ea;
+}
+
+.btn-fix-predict-deleted {
+    background-image: repeating-linear-gradient(45deg,
+            #b30000 0,
+            #b30000 4px,
+            transparent 4px,
+            transparent 8px);
+    background-color: #ff8a8a;
+    border-color: #0057b3ea;
+    color: #ffffff;
+}
+
+.back-link {
+    padding: 0.25rem 0.5rem;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.back-link:hover,
+.back-link:focus {
+    opacity: 0.75;
+    text-decoration: underline;
+}
+
+.error-input::placeholder {
+    color: #dc3545 !important;
+    /* Dimensione del testo */
+    /* Corsivo */
+}
+
+.error-input-val {
+    color: #dc3545 !important;
+    /* Dimensione del testo */
+    /* Corsivo */
+}
+
+
+/* bottone conferma */
+@keyframes vibrate {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-2px);
+    }
+
+    40% {
+        transform: translateX(2px);
+    }
+
+    60% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.vibrate {
+    animation: vibrate 0.3s linear 2;
+}

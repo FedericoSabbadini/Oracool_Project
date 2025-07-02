@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Biblios :: Delete Book from the List</title>
+        <meta charset="UTF-8">
+ 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, 
+              user-scalable=no">
+
+        <!-- Fogli di stile -->
+        <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="../css/style.css" rel="stylesheet">
+
+        <!-- jQuery e plugin JavaScript  -->
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <!-- <script src="../js/bootstrap.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Biblios</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      My Library
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="../books/books.html">Books List</a></li>
+                      <li><a class="dropdown-item" href="../authors/authors.html">Authors List</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid d-flex justify-content-end">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" aria-current="page"><a href="../index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="books.html">Library</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="books.html">Books</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Delete book</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <header>
+                        <h1>
+                            Delete book from the list
+                        </h1>
+                    </header>
+                    <p class="confirm">
+                        Deleting book. Confirm?
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <div class="card border-secondary">
+                        <div class="card-header">
+                            Confirm
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                The book <strong>will be permanently removed</strong> from the data base
+                            </p>
+                            <a class="btn btn-danger" href="books.html"><i class="bi bi-trash"></i> Delete</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 order-md-1">
+                    <div class="card border-secondary">
+                        <div class="card-header">
+                            Revert
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                The book <strong>will not be removed</strong> from the data base
+                            </p>
+                            <a class="btn btn-secondary" href="books.html"><i class="bi bi-box-arrow-left"></i> Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
