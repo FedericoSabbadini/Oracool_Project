@@ -22,39 +22,4 @@ class ControlPanelController extends Controller
     {
         return view('controlPanel');
     }
-
-    /**
-     * Create a new prediction.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function createEdit()
-    {
-        $dl = new DataLayer();
-        $eventsFootball = $dl->getEventFootballEditing();
-
-        if($eventsFootball->isEmpty()){
-            return redirect()->route('controlPanel.index')->with('error', 'No events available for editing.');
-        } else {
-            return view('predictionList', ['eventsFootball' => $eventsFootball, 'action' => 'edit']);
-        }
-    }
-
-    /**
-     * Close predictions for football events.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function createClose()
-    {
-        $dl = new DataLayer();
-        $eventsFootball = $dl->getEventFootballClosing();
-
-        if($eventsFootball->isEmpty()){
-            return redirect()->route('controlPanel.index')->with('error', 'No events available for closing.');
-        } else {
-            return view('predictionList', ['eventsFootball' => $eventsFootball, 'action' => 'close']);
-
-        }
-    }
 }

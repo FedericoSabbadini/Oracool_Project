@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('back')
-<a href="{{ route('controlPanel.createClose') }}" class="text-white text-decoration-none d-inline-flex align-items-center gap-1 small back-link">
+<a href="{{ route('predictionClose.create') }}" class="text-white text-decoration-none d-inline-flex align-items-center gap-1 small back-link">
     <i class="bi bi-arrow-left"></i>
 </a>
 @endsection

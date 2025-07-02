@@ -33,12 +33,13 @@ class OddsController extends Controller
     private function getLeagues() {
         
         $leagues = [
+        'soccer_fifa_club_world_cup',          // FIFA Club World Cup
+
         'soccer_epl',                          // Inghilterra: English Premier League
         'soccer_france_ligue_one',             // Francia: Ligue 1
         'soccer_germany_bundesliga',           // Germania: Bundesliga - Germany
         'soccer_italy_serie_a',                // Italia: Serie A
         'soccer_spain_la_liga',                // Spagna: La Liga
-        'soccer_fifa_club_world_cup',          // FIFA Club World Cup
 
         'soccer_argentina_primera_division',   // Argentina: Primera División
         'soccer_australia_aleague',            // Australia: A-League
@@ -80,7 +81,7 @@ class OddsController extends Controller
         'soccer_uefa_nations_league'           // UEFA: UEFA Nations League
         ];
 
-        return array_slice($leagues, 0, 6);
+        return array_slice($leagues, 0, 1);
     }
 
     /**

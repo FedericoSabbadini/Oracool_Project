@@ -16,6 +16,13 @@ use App\Http\Controllers\LangController;
 use App\Http\Controllers\OddsController;
 
 require __DIR__.'/auth.php';
+// default auth routes
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
 
 
 Route::get('/', [FrontController::class, 'index'])->name('home.index');
@@ -28,12 +35,9 @@ Route::resource('/lang', LangController::class)
         // EDIT   /lang/{lang}/edit       -> edit    (lang.edit)   // Edit language
 
 
-// default auth routes
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::resource('/ranking', RankingController::class)
+    ->only(['index']);
+    // GET    /ranking                -> index   (ranking.index)  // Show all user profiles
 
 
 // Middleware for prediction status
@@ -53,8 +57,6 @@ Route::middleware(['PredictionStatus'])->group(function () {
 
 
         Route::get('/controlPanel',[ControlPanelController::class, 'index'])->name('controlPanel.index');
-        Route::get('/controlPanel/editList', [ControlPanelController::class, 'createEdit'])->name('controlPanel.createEdit');
-        Route::get('/controlPanel/closeList', [ControlPanelController::class, 'createClose'])->name('controlPanel.createClose');
 
         Route::resource('/predictionAdd', PredictionAddController::class)
             ->only(['create','store']);
@@ -63,12 +65,12 @@ Route::middleware(['PredictionStatus'])->group(function () {
         Route::get('/predictionAdd/storeAjax', [PredictionAddController::class, 'storeAjax'])->name('predictionAdd.storeAjax');
 
         Route::resource('/predictionClose', PredictionCloseController::class)
-            ->only(['show', 'update']);
+            ->only(['create', 'show', 'update']);
             // GET    /predictionClose/{predictionClose}    -> show    (predictionClose.show)   // Show specific 
             // PUT   /predictionClose /{predictionClose}      -> update  (predictionClose.update)   // Update prediction
 
         Route::resource('/predictionEdit', PredictionEditController::class)
-            ->only(['show','edit']);
+            ->only(['create', 'show','edit']);
             // GET    /predictionEdit/{predictionEdit}    -> show    (predictionEdit.show)   // Show specific 
             // GET   /predictionEdit/{predictionEdit}/edit       -> edit    (predictionEdit.edit)   // Edit prediction
     });
@@ -84,7 +86,3 @@ Route::middleware(['PredictionStatus'])->group(function () {
     });
 
 });
-
-Route::resource('/ranking', RankingController::class)
-    ->only(['index']);
-    // GET    /ranking                -> index   (ranking.index)  // Show all user profiles

@@ -24,14 +24,4 @@ class RankingController extends Controller
             'users' => $users,
         ]);
     }
-    
-    /**
-     * Display the admin ranking view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function createAdmin()
-    {
-        return view('rankingAdmin');
-    }
 }

@@ -16,6 +16,23 @@ class PredictionEditController extends Controller
 {
 
     /**
+     * Create a new prediction.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        $dl = new DataLayer();
+        $eventsFootball = $dl->getEventFootballEditing();
+
+        if($eventsFootball->isEmpty()){
+            return redirect()->route('controlPanel.index')->with('error', 'No events available for editing.');
+        } else {
+            return view('predictionList', ['eventsFootball' => $eventsFootball, 'action' => 'edit']);
+        }
+    }
+
+    /**
      * Display the prediction edit form for a specific event.
      *
      * @param int $id
@@ -59,7 +76,7 @@ class PredictionEditController extends Controller
                 throw new \Exception("Invalid event type");
         }
 
-        return redirect()->route('controlPanel.createEdit')->with('success', __('error.prediction-edited-successfully'));
+        return redirect()->route('predictionEdit.create')->with('success', __('error.prediction-edited-successfully'));
 
     }
 }

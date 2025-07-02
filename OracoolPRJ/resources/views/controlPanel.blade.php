@@ -44,7 +44,7 @@
         <div class="card-body text-center py-4">
           <h4 class="fw-semibold mb-3">{{ __('controlPanel.edit_title') }}</h4>
           <p class="text-muted mb-3">{{ __('controlPanel.edit_description') }}</p>
-          <a class="btn btn-warning btn-sm px-3 py-2" href="{{route('controlPanel.createEdit')}}">
+          <a class="btn btn-warning btn-sm px-3 py-2" href="{{route('predictionEdit.create')}}">
             <i class="bi bi-pencil-square"></i>
           </a>
         </div>
@@ -56,7 +56,7 @@
         <div class="card-body text-center py-4">
           <h4 class="fw-semibold mb-3">{{ __('controlPanel.close_title') }}</h4>
           <p class="text-muted mb-3">{{ __('controlPanel.close_description') }}</p>
-          <a class="btn btn-success btn-sm px-3 py-2" href="{{route('controlPanel.createClose')}}">
+          <a class="btn btn-success btn-sm px-3 py-2" href="{{route('predictionClose.create')}}">
             <i class="bi bi-calculator"></i>
           </a>
         </div>

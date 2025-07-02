@@ -15,6 +15,24 @@ class PredictionCloseController extends Controller
 {
 
     /**
+     * Close predictions for football events.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        $dl = new DataLayer();
+        $eventsFootball = $dl->getEventFootballClosing();
+
+        if($eventsFootball->isEmpty()){
+            return redirect()->route('controlPanel.index')->with('error', 'No events available for closing.');
+        } else {
+            return view('predictionList', ['eventsFootball' => $eventsFootball, 'action' => 'close']);
+
+        }
+    }
+
+    /**
      * Show the form for closing a prediction for a specific event.
      *
      * @param int $id The ID of the event.
@@ -50,6 +68,6 @@ class PredictionCloseController extends Controller
             default:
                 throw new \Exception("Invalid event type");
         }
-        return redirect()->route('controlPanel.createClose')->with('success', __('error.prediction-closed-successfully'));
+        return redirect()->route('predictionClose.create')->with('success', __('error.prediction-closed-successfully'));
     }
 }
